@@ -1,15 +1,10 @@
 /* HomePage.css */
 
 /* General Reset */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-}
+
 
 /* Header Section */
-.header {
+.hero-content {
     display: flex;
     justify-content: center;
     flex-direction: column;
