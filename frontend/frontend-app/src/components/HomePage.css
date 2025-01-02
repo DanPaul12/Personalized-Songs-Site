@@ -1,0 +1,121 @@
+/* HomePage.css */
+
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+.header h1 {
+    font-size: 3em;
+}
+
+.header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Highlights Section */
+.highlights {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0;
+    padding: 0 20px;
+}
+
+.highlight {
+    text-align: center;
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.highlight img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.highlight h3 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+    color: #4a90e2;
+}
+
+/* Testimonials Section */
+.testimonials {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #eef3f7;
+}
+
+.testimonials h2 {
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    color: #4a90e2;
+}
+
+.testimonial {
+    font-style: italic;
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+/* Call-to-Action Section */
+.cta {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+.cta h2 {
+    font-size: 2em;
+    margin: 0 0 20px;
+}
+
+.cta button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #4a90e2;
+    background-color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cta button:hover {
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+/* Footer Section */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9em;
+}

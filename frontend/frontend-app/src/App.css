@@ -1,6 +1,4 @@
-* {
-  box-sizing: border-box;
-}
+
 
 body {
   font-family: Arial, sans-serif;
@@ -14,7 +12,7 @@ form {
   margin: auto;
   padding: 20px;
   padding-right: 20px;
-  background: #fff;
+  background: rgba(248, 248, 197, 0.5);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -30,22 +28,23 @@ input, textarea {
   padding-top: 10px;
   padding-bottom: 10px;
   margin-right: 20px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  border: 2px solid #ccc;
   border-radius: 4px;
+  background-color: rgba(151, 180, 237, 0.3);
 }
 
 button {
   display: block;
   margin: auto;
-  background-color: #007bff;
+  background-color: rgba(118, 48, 129, 0.8);
   color: #fff;
-  padding: 10px 20px;
+  padding: 20px 40px;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgba(119, 22, 119, 0.8);
 }
