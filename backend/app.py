@@ -39,6 +39,22 @@ def submit_song():
         print("Error occurred:", e)
         print(traceback.format_exc())  # Logs full traceback
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/api/song-submissions', methods=['GET'])
+def get_submissions():
+    try:
+        submissions = Orders.query.all()
+        result = [
+            {
+                "id": submission.id,
+                "song_details": submission.song_details,
+                "status": submission.status,
+                "created_at": submission.created_at
+            } for submission in submissions
+        ]
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
