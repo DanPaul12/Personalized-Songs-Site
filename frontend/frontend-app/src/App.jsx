@@ -16,7 +16,8 @@ function App() {
                 <Route path="/" element={<SongSubmissionForm />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/submissions" element={<SubmissionsList />} />
-                <Route path="/songlevels" element={<SongLevels />} />
+                <Route path="/order-form" element={<SongSubmissionForm />} />
+                <Route path="/song-levels" element={<SongLevels />} />
             </Routes>
         </Router>
     </div>;

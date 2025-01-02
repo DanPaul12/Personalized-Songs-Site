@@ -1,29 +1,51 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './SongLevels.css';
+
 
 function SongLevels() {
     const navigate = useNavigate();
 
-    const handleSelection = (level) => {
-        navigate(`/order-form?level=${level}`); // Navigate to form with level as a query parameter
+    const songLevels = [
+        {
+            level: 'basic',
+            title: 'Basic',
+            image: 'basic-level.jpg', // Replace with your image paths
+            description: 'A simple yet heartfelt custom song.',
+        },
+        {
+            level: 'premium',
+            title: 'Premium',
+            image: 'premium-level.jpg', // Replace with your image paths
+            description: 'Enhanced production and creative lyrics.',
+        },
+        {
+            level: 'deluxe',
+            title: 'Deluxe',
+            image: 'deluxe-level.jpg', // Replace with your image paths
+            description: 'Top-notch production and a personal touch.',
+        },
+    ];
+
+    const handleCardClick = (level) => {
+        navigate(`/order-form?level=${level}`);
     };
 
     return (
         <div className="song-levels">
             <h1>Select Your Song Level</h1>
             <div className="levels-container">
-                <div className="level-card" onClick={() => handleSelection('basic')}>
-                    <h2>Basic Song</h2>
-                    <p>A simple and heartfelt melody perfect for any occasion.</p>
-                </div>
-                <div className="level-card" onClick={() => handleSelection('premium')}>
-                    <h2>Premium Song</h2>
-                    <p>A more elaborate composition with professional mixing and mastering.</p>
-                </div>
-                <div className="level-card" onClick={() => handleSelection('custom')}>
-                    <h2>Custom Song</h2>
-                    <p>Fully tailored, unique production with your input throughout.</p>
-                </div>
+                {songLevels.map((level) => (
+                    <div
+                        key={level.level}
+                        className="level-card"
+                        onClick={() => handleCardClick(level.level)}
+                    >
+                        <img src={level.image} alt={level.title} className="level-image" />
+                        <h2>{level.title}</h2>
+                        <p>{level.description}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );

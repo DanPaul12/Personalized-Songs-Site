@@ -1,7 +1,15 @@
 import React from 'react';
-import './HomePage.css'; // Create and style this CSS file
+import './HomePage.css'; 
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        navigate('/song-levels');
+    };
+    
     return (
         <div className="homepage">
             {/* Hero Section */}
@@ -10,7 +18,7 @@ const HomePage = () => {
                     <h4>Dan & Drum's</h4>
                     <h1>Personalized Songs</h1>
                     <p>The Personal is Universal</p>
-                    <button className="cta-button">Get Started</button>
+                    <button className="cta-button" onClick={handleGetStarted}>Get Started</button>
                 </div>
             </section>
 
@@ -98,7 +106,7 @@ const HomePage = () => {
             {/* Call-to-Action Section */}
             <section className="call-to-action">
                 <h2>Ready to Create Something Truly Special?</h2>
-                <button className="cta-button">Order Your Song</button>
+                <button className="cta-button" onClick={handleGetStarted}>Order Your Song</button>
             </section>
         </div>
     );

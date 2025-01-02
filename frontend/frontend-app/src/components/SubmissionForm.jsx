@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 function SongSubmissionForm() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const selectedLevel = queryParams.get('level');
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
