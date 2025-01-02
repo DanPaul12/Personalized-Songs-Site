@@ -23,17 +23,25 @@ const HomePage = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="testimonials">
-                <h2>What People Are Saying</h2>
-                <div className="testimonial">
-                    <blockquote>
-                        “Dan’s song brought my wedding to life—now it has 1M streams on Spotify!”
-                    </blockquote>
+            <section className='testimonial-section'>
+                <div className='testimonialimage'>
+                    <img src='src/images/chazandlouise.png'></img>
                 </div>
-                <div className="testimonial">
-                    <blockquote>
-                        “The most unique gift I’ve ever given. Truly unforgettable.”
-                    </blockquote>
+                <div className="testimonials">
+                    <h2>What People Are Saying</h2>
+                    <div className="testimonial">
+                        <blockquote>
+                            “Dan’s song brought my wedding to life—now it has 1M streams on Spotify!”
+                        </blockquote>
+                    </div>
+                    <div className="testimonial">
+                        <blockquote>
+                            “The most unique gift I’ve ever given. Truly unforgettable.”
+                        </blockquote>
+                    </div>
+                </div>
+                <div className='testimonialimage'>
+                    <img src='src/images/johnnynava.png'></img>
                 </div>
             </section>
 
@@ -55,16 +63,31 @@ const HomePage = () => {
                 <h2>How It Works</h2>
                 <div className="steps">
                     <div className="step">
-                        <h3>1. Tell Your Story</h3>
-                        <p>Fill out a quick form with details about your song.</p>
+                        <div className='text'>
+                            <h3>1. Tell Your Story</h3>
+                            <p>Fill out a quick form with details about your song.</p>
+                        </div>
+                        <div className='stepimg'>
+                            <img src='src/images/firstsongwedding.png'></img>
+                        </div>
                     </div>
                     <div className="step">
-                        <h3>2. Collaborate</h3>
-                        <p>I’ll create a one-of-a-kind song inspired by your input.</p>
+                        <div className='stepimg'>
+                            <img src='src/images/firstsongwedding.png'></img>
+                        </div>
+                        <div className='text'>
+                            <h3>2. Collaborate</h3>
+                            <p>I’ll create a one-of-a-kind song inspired by your input.</p>
+                        </div>
                     </div>
                     <div className="step">
-                        <h3>3. Receive Your Song</h3>
-                        <p>Get a professional-quality track delivered to you.</p>
+                        <div className='text'>
+                            <h3>3. Receive Your Song</h3>
+                            <p>Get a professional-quality track delivered to you.</p>
+                        </div>
+                        <div className='stepimg'>
+                            <img src='src/images/firstsongwedding.png'></img>
+                        </div>
                     </div>
                 </div>
             </section>

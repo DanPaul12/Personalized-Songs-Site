@@ -1,27 +1,48 @@
 /* HomePage.css */
 
-/* General Reset */
-
 
 /* Header Section */
 .hero-content {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
-    padding: 50px;
-    background-color: #4a90e2;
-    color: #fff;
+    background-image: url('/src/images/dananddrumpress.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire header */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    color: #fff; /* Text color for better contrast */
+    position: relative;
+    padding-bottom: 4em;
+    padding-top: 10em;
 }
 
-.header h1 {
+.hero-content h1 {
     font-size: 3em;
+    margin: 20px;
 }
 
-.header p {
+.hero-content h4 {  
+    margin-bottom: 1px;
+    margin-left: 20px;
+}
+
+.hero-content p {
     font-size: 1.2em;
-    margin-top: 10px;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.about{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about p{
+    max-width: 80%;
 }
 
 /* Highlights Section */
@@ -41,12 +62,6 @@
     border-radius: 8px;
 }
 
-.highlight img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    margin-bottom: 20px;
-}
 
 .highlight h3 {
     margin: 0 0 10px;
@@ -55,6 +70,16 @@
 }
 
 /* Testimonials Section */
+.testimonial-section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.rightimage{
+    width: 300px;
+}
+
 .testimonials {
     text-align: center;
     padding: 50px 20px;
@@ -67,10 +92,35 @@
     color: #4a90e2;
 }
 
+.testimonialimage img{
+    width: 250px;
+    height: 100%;
+}
+
 .testimonial {
     font-style: italic;
     margin: 20px 0;
     font-size: 1.1em;
+}
+
+/* How it Works Section */
+.how-it-works .step{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.how-it-works .step .text{
+    display: flex;
+    flex-direction: column;
+}
+
+.stepimg img{
+    max-width: 250px;
+    border-radius: 25px;
 }
 
 /* Call-to-Action Section */
