@@ -48,14 +48,17 @@ const HomePage = () => {
             {/* Portfolio Section */}
             <section className="portfolio">
                 <h2>Listen to the Music</h2>
-                <div className="song-snippet">
-                    <audio controls>
-                        <source src="/path-to-song-snippet.mp3" type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p>This custom song now has 2M+ Spotify streams!</p>
+                <div className="spotify-player">
+                    {/* Spotify Embed */}
+                    <iframe 
+                        src="https://open.spotify.com/embed/track/173Q9olf7rOr0gQkGpK338?utm_source=generator" 
+                        width="300" 
+                        height="380" 
+                        frameBorder="0" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
                 </div>
-                {/* Add more snippets as needed */}
             </section>
 
             {/* How It Works Section */}

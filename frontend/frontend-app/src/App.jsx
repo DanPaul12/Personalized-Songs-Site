@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import SongSubmissionForm from './components/SubmissionForm';
 import SubmissionsList from './components/SubmissionsList';
 import HomePage from './components/HomePage';
+import SongLevels from './components/SongLevels';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/" element={<SongSubmissionForm />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/submissions" element={<SubmissionsList />} />
+                <Route path="/songlevels" element={<SongLevels />} />
             </Routes>
         </Router>
     </div>;

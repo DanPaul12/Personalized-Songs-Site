@@ -1,4 +1,3 @@
-/* HomePage.css */
 
 
 /* Header Section */
@@ -95,6 +94,7 @@
 .testimonialimage img{
     width: 250px;
     height: 100%;
+    border-radius: 20px;
 }
 
 .testimonial {
@@ -104,6 +104,15 @@
 }
 
 /* How it Works Section */
+.how-it-works{
+    display: flex;
+    flex-direction: column;
+}
+
+.how-it-works h2{
+    align-self: center;
+}
+
 .how-it-works .step{
     display: flex;
     flex-direction: row;
