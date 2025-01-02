@@ -7,12 +7,23 @@ function SongSubmissionForm() {
     const queryParams = new URLSearchParams(location.search);
     const selectedLevel = queryParams.get('level');
 
+    const priceMapping = {
+        basic: 250,
+        premium: 500,
+        deluxe: 200,
+    };
+    
+    const selectedPrice = priceMapping[selectedLevel] || 0;
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         occasion: '',
         preferences: '',
-        lyricsIdea: ''
+        lyricsIdea: '',
+        dateNeededBy: '',
+        level: selectedLevel || 'basic',
+        price: selectedPrice,
     });
 
     const handleChange = (e) => {
@@ -31,8 +42,12 @@ function SongSubmissionForm() {
         }
     };
 
+
     return (
         <form onSubmit={handleSubmit}>
+            <h1>Order Form</h1>
+            <p>Selected Level: {selectedLevel} (${selectedPrice})</p>
+            <p>Please allow 2-3 weeks for delivery- more time often means more special!</p>
             <label>
                 Name:
                 <input type="text" name="name" value={formData.name} onChange={handleChange} required />
@@ -58,6 +73,10 @@ function SongSubmissionForm() {
                 <textarea name="lyricsIdea" value={formData.lyricsIdea} onChange={handleChange}></textarea>
             </label>
             <br />
+            <label>
+                Date Needed By:
+                <input type="date" name="dateNeededBy" value={formData.dateNeededBy} onChange={handleChange} required />
+            </label>
             <button type="submit">Submit Song</button>
         </form>
     );
