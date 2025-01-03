@@ -5,6 +5,18 @@ from datetime import datetime
 import stripe
 import traceback
 import json
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the keys
+stripe_publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
+stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
+
+print(f"Publishable Key: {stripe_publishable_key}")
+print(f"Secret Key: {stripe_secret_key}")
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +37,7 @@ class Order(db.Model):
     status = db.Column(db.String(50), default='pending', nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=True)
 
-stripe.api_key = 'your_stripe_secret_key'
+stripe.api_key = stripe_secret_key
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment_intent():
