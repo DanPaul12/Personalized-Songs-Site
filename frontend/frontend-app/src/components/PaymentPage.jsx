@@ -26,9 +26,11 @@ function PaymentForm() {
         }
 
         try {
-            const { data: clientSecret } = await axios.post("http://127.0.0.1:5000/create-payment-intent", {
+            const response = await axios.post("http://127.0.0.1:5000/create-payment-intent", {
                 amount: amount * 100, // Convert to cents
             });
+
+            const clientSecret = response.data.clientSecret; // Extract the clientSecret string
 
             const { error } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
