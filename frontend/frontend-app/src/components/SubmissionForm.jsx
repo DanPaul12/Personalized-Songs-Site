@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SongSubmissionForm() {
+    const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const selectedLevel = queryParams.get('level');
@@ -10,7 +12,7 @@ function SongSubmissionForm() {
     const priceMapping = {
         basic: 250,
         premium: 500,
-        deluxe: 200,
+        deluxe: 650,
     };
     
     const selectedPrice = priceMapping[selectedLevel] || 0;
@@ -40,6 +42,7 @@ function SongSubmissionForm() {
             console.error('Error submitting song:', error);
             alert('Failed to submit the song. Please try again.');
         }
+        navigate('/payment-page');
     };
 
 

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import stripe
 import traceback
 import json
 
@@ -23,6 +24,22 @@ class Order(db.Model):
     price = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), default='pending', nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=True)
+
+stripe.api_key = 'your_stripe_secret_key'
+
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment_intent():
+    try:
+        data = request.json
+        amount = data.get('amount', 0)
+        intent = stripe.PaymentIntent.create(
+            amount=amount,
+            currency='usd',
+            automatic_payment_methods={"enabled": True},
+        )
+        return jsonify({'clientSecret': intent['client_secret']})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/api/song-submissions', methods=['POST'])
 def submit_song():
@@ -58,7 +75,7 @@ def submit_song():
 @app.route('/api/song-submissions', methods=['GET'])
 def get_submissions():
     try:
-        submissions = Orders.query.all()
+        submissions = Order.query.all()
         result = [
             {
                 "id": submission.id,
