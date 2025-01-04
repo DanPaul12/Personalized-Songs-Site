@@ -14,7 +14,7 @@ function SongSubmissionForm() {
         premium: 500,
         deluxe: 650,
     };
-    
+
     const selectedPrice = priceMapping[selectedLevel] || 0;
 
     const [formData, setFormData] = useState({
@@ -38,13 +38,14 @@ function SongSubmissionForm() {
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/song-submissions', formData);
             alert('Song submitted successfully: ' + response.data.message);
+
+            // Redirect to the payment page with song details
+            navigate(`/payment-page?email=${encodeURIComponent(formData.email)}&price=${formData.price}`);
         } catch (error) {
             console.error('Error submitting song:', error);
             alert('Failed to submit the song. Please try again.');
         }
-        navigate('/payment-page');
     };
-
 
     return (
         <form onSubmit={handleSubmit}>

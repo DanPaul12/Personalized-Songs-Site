@@ -37,6 +37,21 @@ class Order(db.Model):
     status = db.Column(db.String(50), default='pending', nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=True)
 
+    # Relationship with Payment table
+    #payments = db.relationship('Payment', backref='order', lazy=True)
+
+
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    stripe_payment_id = db.Column(db.String(100), nullable=False, unique=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    currency = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    receipt_url = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 stripe.api_key = stripe_secret_key
 
 @app.route('/create-payment-intent', methods=['POST'])
@@ -52,6 +67,54 @@ def create_payment_intent():
         return jsonify({'clientSecret': intent['client_secret']})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/record-payment', methods=['POST'])
+def record_payment():
+    data = request.json
+    try:
+        # Retrieve the associated order by order_id
+        order_id = data['order_id']
+        order = Order.query.get(order_id)
+        if not order:
+            return jsonify({'error': 'Order not found'}), 404
+
+        # Create a new Payment record
+        new_payment = Payment(
+            stripe_payment_id=data['stripe_payment_id'],
+            order_id=order_id,
+            email=data['email'],
+            amount=data['amount'],
+            currency=data['currency'],
+            status=data['status'],
+            receipt_url=data.get('receipt_url')  # Optional field
+        )
+        db.session.add(new_payment)
+        db.session.commit()
+
+        return jsonify({'message': 'Payment recorded successfully!'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+    
+@app.route('/payments/<int:order_id>', methods=['GET'])
+def get_payments_for_order(order_id):
+    try:
+        # Query all payments associated with the given order_id
+        payments = Payment.query.filter_by(order_id=order_id).all()
+        payment_list = [{
+            'id': payment.id,
+            'stripe_payment_id': payment.stripe_payment_id,
+            'email': payment.email,
+            'amount': payment.amount,
+            'currency': payment.currency,
+            'status': payment.status,
+            'receipt_url': payment.receipt_url,
+            'created_at': payment.created_at
+        } for payment in payments]
+
+        return jsonify(payment_list), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/api/song-submissions', methods=['POST'])
 def submit_song():
@@ -60,7 +123,7 @@ def submit_song():
         # Parse data from the request
         name = data['name']
         email = data['email']
-        date_needed_by=datetime.strptime(data['dateNeededBy'], '%Y-%m-%d').date(),
+        date_needed_by=datetime.strptime(data['dateNeededBy'], '%Y-%m-%d').date()
         level = data['level']
         price = data['price']
         song_details = json.dumps({
@@ -75,7 +138,8 @@ def submit_song():
             email=email,
             song_details=song_details,
             level=level,
-            price=price
+            price=price,
+            date_needed_by=date_needed_by
         )
         db.session.add(new_order)
         db.session.commit()

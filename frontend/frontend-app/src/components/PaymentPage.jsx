@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 // Load Stripe instance with environment variable
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
@@ -9,8 +10,14 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 
 function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
-    const [email, setEmail] = useState("");
-    const [amount, setAmount] = useState(0);
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const emailFromQuery = queryParams.get('email') || '';
+    const priceFromQuery = queryParams.get('price') || 0;
+
+    const [email] = useState(emailFromQuery); // Email is pre-filled and uneditable
+    const [amount] = useState(priceFromQuery); // Amount is pre-filled and uneditable
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -60,8 +67,7 @@ function PaymentForm() {
                 <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+                    disabled
                 />
             </label>
             <br />
@@ -70,8 +76,7 @@ function PaymentForm() {
                 <input
                     type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
+                    disabled
                 />
             </label>
             <br />
