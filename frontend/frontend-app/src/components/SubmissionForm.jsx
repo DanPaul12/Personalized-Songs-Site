@@ -64,17 +64,17 @@ function SongSubmissionForm() {
                 </label>
                 <br />
                 <label>
-                    Occasion:
+                    Subject/Occasion:
                     <input type="text" name="occasion" value={formData.occasion} onChange={handleChange} required />
                 </label>
                 <br />
                 <label>
-                    Preferences:
+                    Childhood Memories or Inside Jokes:
                     <input type="text" name="preferences" value={formData.preferences} onChange={handleChange} />
                 </label>
                 <br />
                 <label>
-                    Lyrics Idea:
+                    All other info:
                     <textarea name="lyricsIdea" value={formData.lyricsIdea} onChange={handleChange}></textarea>
                 </label>
                 <br />
@@ -82,6 +82,8 @@ function SongSubmissionForm() {
                     Date Needed By:
                     <input type="date" name="dateNeededBy" value={formData.dateNeededBy} onChange={handleChange} required />
                 </label>
+                <br />
+                <p>Feel free to email danandrum@gmail.com with  any other details or media!</p>
                 <button type="submit">Submit Song</button>
             </form>
         </div>

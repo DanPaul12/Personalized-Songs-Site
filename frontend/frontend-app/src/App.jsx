@@ -6,6 +6,7 @@ import SubmissionsList from './components/SubmissionsList';
 import HomePage from './components/HomePage';
 import SongLevels from './components/SongLevels';
 import PaymentPage from './components/PaymentPage';
+import Navbar from './components/NavBar';
 
 
 
@@ -14,6 +15,7 @@ function App() {
 
     return <div>
         <Router>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/home" element={<HomePage />} />
