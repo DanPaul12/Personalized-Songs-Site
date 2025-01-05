@@ -35,6 +35,7 @@ function PaymentForm() {
         try {
             const response = await axios.post("http://127.0.0.1:5000/create-payment-intent", {
                 amount: amount * 100, // Convert to cents
+                email: email
             });
 
             const clientSecret = response.data.clientSecret; // Extract the clientSecret string
@@ -50,6 +51,10 @@ function PaymentForm() {
                 setMessage(error.message);
             } else {
                 setMessage("Payment successful! Thank you.");
+                await axios.post("http://127.0.0.1:5000/update-payment-status", {
+                    paymentIntentId: clientSecret.split("_secret")[0],
+                    status: "succeeded",
+                });
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");

@@ -42,79 +42,59 @@ class Order(db.Model):
 
 
 class Payment(db.Model):
+    __tablename__ = 'payments' 
     id = db.Column(db.Integer, primary_key=True)
-    stripe_payment_id = db.Column(db.String(100), nullable=False, unique=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    currency = db.Column(db.String(10), nullable=False)
-    status = db.Column(db.String(50), nullable=False)
-    receipt_url = db.Column(db.String(255))
+    payment_intent_id = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False)
+    amount = db.Column(db.Integer, nullable=False)  # Amount in cents
+    status = db.Column(db.String(50), nullable=False, default="pending")  # e.g., pending, succeeded, failed
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 stripe.api_key = stripe_secret_key
+
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment_intent():
     try:
         data = request.json
         amount = data.get('amount', 0)
+        email = data.get('email')
         intent = stripe.PaymentIntent.create(
             amount=amount,
             currency='usd',
             automatic_payment_methods={"enabled": True},
         )
+
+        payment = Payment(
+            payment_intent_id=intent['id'],
+            email=email,
+            amount=amount,
+            status="pending"
+        )
+        db.session.add(payment)
+        db.session.commit()
+
         return jsonify({'clientSecret': intent['client_secret']})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
     
-@app.route('/record-payment', methods=['POST'])
-def record_payment():
-    data = request.json
+@app.route('/update-payment-status', methods=['POST'])
+def update_payment_status():
+    data = request.get_json()
+    payment_intent_id = data['paymentIntentId']
+    status = data['status']
+
     try:
-        # Retrieve the associated order by order_id
-        order_id = data['order_id']
-        order = Order.query.get(order_id)
-        if not order:
-            return jsonify({'error': 'Order not found'}), 404
-
-        # Create a new Payment record
-        new_payment = Payment(
-            stripe_payment_id=data['stripe_payment_id'],
-            order_id=order_id,
-            email=data['email'],
-            amount=data['amount'],
-            currency=data['currency'],
-            status=data['status'],
-            receipt_url=data.get('receipt_url')  # Optional field
-        )
-        db.session.add(new_payment)
-        db.session.commit()
-
-        return jsonify({'message': 'Payment recorded successfully!'}), 201
+        # Find the payment record
+        payment = Payment.query.filter_by(payment_intent_id=payment_intent_id).first()
+        if payment:
+            payment.status = status
+            db.session.commit()
+            return jsonify({"message": "Payment status updated successfully."})
+        else:
+            return jsonify({"error": "Payment not found."}), 404
     except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 400
-    
-@app.route('/payments/<int:order_id>', methods=['GET'])
-def get_payments_for_order(order_id):
-    try:
-        # Query all payments associated with the given order_id
-        payments = Payment.query.filter_by(order_id=order_id).all()
-        payment_list = [{
-            'id': payment.id,
-            'stripe_payment_id': payment.stripe_payment_id,
-            'email': payment.email,
-            'amount': payment.amount,
-            'currency': payment.currency,
-            'status': payment.status,
-            'receipt_url': payment.receipt_url,
-            'created_at': payment.created_at
-        } for payment in payments]
-
-        return jsonify(payment_list), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        return jsonify(error=str(e)), 400
 
 @app.route('/api/song-submissions', methods=['POST'])
 def submit_song():
