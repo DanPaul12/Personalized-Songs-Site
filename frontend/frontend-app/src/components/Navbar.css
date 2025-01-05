@@ -33,3 +33,15 @@
 .navbar-links li a:hover {
     color: #f8f8c5; /* Hover color */
 }
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+}

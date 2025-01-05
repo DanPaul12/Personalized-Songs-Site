@@ -7,10 +7,16 @@ import HomePage from './components/HomePage';
 import SongLevels from './components/SongLevels';
 import PaymentPage from './components/PaymentPage';
 import Navbar from './components/NavBar';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 
 
 function App() {
+    useEffect(() => {
+        AOS.init();
+    }, []);
     
 
     return <div>

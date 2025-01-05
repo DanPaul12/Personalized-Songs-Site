@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: flex-start;
     text-align: center;
-    background-image: url('/src/images/dananddrumpress.jpg'); /* Path to your image */
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/images/dananddrumpress.jpg');
     background-size: cover; /* Ensures the image covers the entire header */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents tiling */
@@ -21,17 +21,22 @@
 .hero-content h1 {
     font-size: 3em;
     margin: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: 'Poppins', sans-serif;
 }
 
 .hero-content h4 {  
     margin-bottom: 1px;
     margin-left: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-content p {
     font-size: 1.2em;
     margin: 10px;
     margin-left: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: 'Roboto', sans-serif, italic;
 }
 
 .about{
@@ -43,67 +48,17 @@
 
 .about p{
     max-width: 70%;
-    margin-bottom: 4em;
+    
 }
 
-/* Highlights Section */
-.highlights {
-    display: flex;
-    justify-content: space-around;
-    margin: 40px 0;
-    padding: 0 20px;
-}
-
-.highlight {
-    text-align: center;
-    width: 30%;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-
-.highlight h3 {
-    margin: 0 0 10px;
-    font-size: 1.5em;
-    color: #4a90e2;
-}
 
 /* Testimonials Section */
 .testimonial-section{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
 }
 
-.rightimage{
-    width: 300px;
-}
-
-.testimonials {
-    text-align: center;
-    padding: 50px 20px;
-    
-}
-
-.testimonials h2 {
-    margin-bottom: 30px;
-    font-size: 2.5em;
-    color: #4a90e2;
-}
-
-.testimonialimage img{
-    width: 250px;
-    height: 100%;
-    border-radius: 20px;
-}
-
-.testimonial {
-    font-style: italic;
-    margin: 20px 0;
-    font-size: 1.1em;
-}
 
 /* Portfolio Section */
 .portfolio{
@@ -168,10 +123,27 @@
     box-sizing: border-box;
 }
 
-
 .stepimg img{
     max-width: 250px;
     border-radius: 25px;
+}
+
+.how-it-works .step {
+    position: relative;
+}
+
+.how-it-works .step:after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: #4a90e2;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.how-it-works .step:after {
+    display: none;
 }
 
 /* Call-to-Action Section */

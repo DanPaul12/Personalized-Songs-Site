@@ -4,10 +4,12 @@ import './Navbar.css'
 
 
 function Navbar() {
+
     return (
         <nav className="navbar">
             <div className="navbar-brand">
                 <Link to="/">Home</Link>
+                
             </div>
             <ul className="navbar-links">
                 <li><Link to="/home">Home</Link></li>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomePage.css'; 
 import { useNavigate } from 'react-router-dom';
+import Testimonials from './Testimonials';
 
 const HomePage = () => {
 
@@ -14,7 +15,7 @@ const HomePage = () => {
         <div className="homepage">
             {/* Hero Section */}
             <section className="hero">
-                <div className="hero-content">
+                <div className="hero-content" data-aos="fade-up">
                     <h4>Dan & Drum's</h4>
                     <h1>Personalized Songs</h1>
                     <p>The Personal is Universal</p>
@@ -32,25 +33,8 @@ const HomePage = () => {
 
             {/* Testimonials Section */}
             <section className='testimonial-section'>
-                <div className='testimonialimage'>
-                    <img src='src/images/chazandlouise.png'></img>
-                </div>
-                <div className="testimonials">
-                    <h2>What People Are Saying</h2>
-                    <div className="testimonial">
-                        <blockquote>
-                            “Dan’s song brought my wedding to life—now it has 1M streams on Spotify!”
-                        </blockquote>
-                    </div>
-                    <div className="testimonial">
-                        <blockquote>
-                            “The most unique gift I’ve ever given. Truly unforgettable.”
-                        </blockquote>
-                    </div>
-                </div>
-                <div className='testimonialimage'>
-                    <img src='src/images/johnnynava.png'></img>
-                </div>
+                <h2>The Reviews are in:</h2>
+                <Testimonials/>
             </section>
 
             {/* Portfolio Section */}
@@ -89,18 +73,16 @@ const HomePage = () => {
             <section className="how-it-works">
                 <h2>How It Works</h2>
                 <div className="steps">
-                    <div className="step">
+                    <div className="step" data-aos="fade-up">
                         <div className='text1'>
-                            
                                 <h3>1. Tell Your Story</h3>
-                                <p>Fill out a quick form with details about your song.</p>
-                            
+                                <p>Fill out a quick form with details about your song.</p>    
                         </div>
                         <div className='stepimg'>
-                            <img src='src/images/firstsongwedding.png'></img>
+                            <img src='src/images/firstsong1.png'></img>
                         </div>
                     </div>
-                    <div className="step">
+                    <div className="step" data-aos="fade-up">
                         <div className='stepimg'>
                             <img src='src/images/firstsongwedding.png'></img>
                         </div>
@@ -109,13 +91,13 @@ const HomePage = () => {
                             <p>I’ll create a one-of-a-kind song inspired by your input.</p>
                         </div>
                     </div>
-                    <div className="step">
+                    <div className="step" data-aos="fade-up">
                         <div className='text3'>
                             <h3>3. Receive Your Song</h3>
                             <p>Get a professional-quality track delivered to you.</p>
                         </div>
                         <div className='stepimg'>
-                            <img src='src/images/firstsongwedding.png'></img>
+                            <img src='src/images/firstsong3.png'></img>
                         </div>
                     </div>
                 </div>

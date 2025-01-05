@@ -1,0 +1,52 @@
+.testimonial-section {
+    text-align: center;
+    padding: 20px 10px;
+   
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #4ae270; /* Replace with your desired color */
+}
+
+/* Optional: Change hover color */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    color: #333; /* Replace with your desired hover color */
+}
+
+/* Optional: Adjust size */
+.swiper-button-next,
+.swiper-button-prev {
+    font-size: 24px; /* Adjust size of arrows */
+}
+
+.testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
+    background: #fff;
+    border-radius: 15px;
+    border: solid ;
+}
+
+.testimonial-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.testimonial-card blockquote {
+    font-style: italic;
+    font-size: 1.2em;
+    color: #555;
+}
