@@ -48,41 +48,43 @@ function SongSubmissionForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Order Form</h1>
-            <p>Selected Level: {selectedLevel} (${selectedPrice})</p>
-            <p>Please allow 2-3 weeks for delivery- more time often means more special!</p>
-            <label>
-                Name:
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-            </label>
-            <br />
-            <label>
-                Email:
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-            </label>
-            <br />
-            <label>
-                Occasion:
-                <input type="text" name="occasion" value={formData.occasion} onChange={handleChange} required />
-            </label>
-            <br />
-            <label>
-                Preferences:
-                <input type="text" name="preferences" value={formData.preferences} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-                Lyrics Idea:
-                <textarea name="lyricsIdea" value={formData.lyricsIdea} onChange={handleChange}></textarea>
-            </label>
-            <br />
-            <label>
-                Date Needed By:
-                <input type="date" name="dateNeededBy" value={formData.dateNeededBy} onChange={handleChange} required />
-            </label>
-            <button type="submit">Submit Song</button>
-        </form>
+        <div className='bodysection'>
+            <form onSubmit={handleSubmit}>
+                <h1>Order Form</h1>
+                <p>Selected Level: {selectedLevel} (${selectedPrice})</p>
+                <p>Please allow 2-3 weeks for delivery- more time often means more special!</p>
+                <label>
+                    Name:
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                </label>
+                <br />
+                <label>
+                    Email:
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </label>
+                <br />
+                <label>
+                    Occasion:
+                    <input type="text" name="occasion" value={formData.occasion} onChange={handleChange} required />
+                </label>
+                <br />
+                <label>
+                    Preferences:
+                    <input type="text" name="preferences" value={formData.preferences} onChange={handleChange} />
+                </label>
+                <br />
+                <label>
+                    Lyrics Idea:
+                    <textarea name="lyricsIdea" value={formData.lyricsIdea} onChange={handleChange}></textarea>
+                </label>
+                <br />
+                <label>
+                    Date Needed By:
+                    <input type="date" name="dateNeededBy" value={formData.dateNeededBy} onChange={handleChange} required />
+                </label>
+                <button type="submit">Submit Song</button>
+            </form>
+        </div>
     );
 }
 

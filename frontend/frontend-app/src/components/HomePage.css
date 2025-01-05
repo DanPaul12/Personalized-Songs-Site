@@ -15,6 +15,7 @@
     position: relative;
     padding-bottom: 4em;
     padding-top: 10em;
+    border-radius: 5px;
 }
 
 .hero-content h1 {
@@ -41,7 +42,8 @@
 }
 
 .about p{
-    max-width: 80%;
+    max-width: 70%;
+    margin-bottom: 4em;
 }
 
 /* Highlights Section */
@@ -82,7 +84,7 @@
 .testimonials {
     text-align: center;
     padding: 50px 20px;
-    background-color: #eef3f7;
+    
 }
 
 .testimonials h2 {
@@ -101,6 +103,21 @@
     font-style: italic;
     margin: 20px 0;
     font-size: 1.1em;
+}
+
+/* Portfolio Section */
+.portfolio{
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio h2{
+    align-self: center;
+}
+
+.portfolio-content{
+    display: flex;
+    flex-direction: row;
 }
 
 /* How it Works Section */
@@ -122,10 +139,35 @@
     margin-bottom: 2em;
 }
 
-.how-it-works .step .text{
+.how-it-works .step .text1, .text2, .text3{
     display: flex;
     flex-direction: column;
 }
+
+.how-it-works .step .text1{
+    background-color: rgba(164, 237, 237, 0.5);
+    padding: 2em 4em;
+    border-radius: 3em;
+    border: 2em rgba(128, 174, 133, 0.5) solid;
+    box-sizing: border-box;
+}
+
+.how-it-works .step .text2{
+    background-color: rgba(181, 246, 188, 0.5);
+    padding: 2em 4em;
+    border-radius: 3em;
+    border: 2em rgba(156, 110, 171, 0.5) solid;
+    box-sizing: border-box;
+}
+
+.how-it-works .step .text3{
+    background-color: rgba(235, 198, 246, 0.5);
+    padding: 2em 4em;
+    border-radius: 3em;
+    border: 2em rgba(110, 171, 171, 0.5) solid;
+    box-sizing: border-box;
+}
+
 
 .stepimg img{
     max-width: 250px;

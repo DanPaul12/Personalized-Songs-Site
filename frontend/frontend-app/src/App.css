@@ -1,10 +1,11 @@
 
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f9f9f9;
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url('src/images/pinkpaper2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
@@ -13,7 +14,7 @@ form {
   margin: auto;
   padding: 20px;
   padding-right: 20px;
-  background: rgba(248, 248, 197, 0.5);
+  background: rgba(248, 248, 197, 0.9);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

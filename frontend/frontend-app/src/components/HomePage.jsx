@@ -56,16 +56,32 @@ const HomePage = () => {
             {/* Portfolio Section */}
             <section className="portfolio">
                 <h2>Listen to the Music</h2>
-                <div className="spotify-player">
-                    {/* Spotify Embed */}
-                    <iframe 
-                        src="https://open.spotify.com/embed/track/173Q9olf7rOr0gQkGpK338?utm_source=generator" 
-                        width="300" 
-                        height="380" 
-                        frameBorder="0" 
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                        loading="lazy">
-                    </iframe>
+                <div className='portfolio-content'>
+                    <div className="spotify-player">
+                        {/* Spotify Embed */}
+                        <iframe 
+                            src="https://open.spotify.com/embed/track/173Q9olf7rOr0gQkGpK338?utm_source=generator" 
+                            width="300" 
+                            height="380" 
+                            frameBorder="0" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div>
+                        <p>Our top songs have earned millions of streams across platforms</p>
+                    </div>
+                    <div className="spotify-player">
+                        {/* Spotify Embed */}
+                        <iframe 
+                            src="https://open.spotify.com/embed/track/6G1LvBcrEEB4RNimTqFmKm?utm_source=generator" 
+                            width="300" 
+                            height="380" 
+                            frameBorder="0" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
                 </div>
             </section>
 
@@ -74,9 +90,11 @@ const HomePage = () => {
                 <h2>How It Works</h2>
                 <div className="steps">
                     <div className="step">
-                        <div className='text'>
-                            <h3>1. Tell Your Story</h3>
-                            <p>Fill out a quick form with details about your song.</p>
+                        <div className='text1'>
+                            
+                                <h3>1. Tell Your Story</h3>
+                                <p>Fill out a quick form with details about your song.</p>
+                            
                         </div>
                         <div className='stepimg'>
                             <img src='src/images/firstsongwedding.png'></img>
@@ -86,13 +104,13 @@ const HomePage = () => {
                         <div className='stepimg'>
                             <img src='src/images/firstsongwedding.png'></img>
                         </div>
-                        <div className='text'>
+                        <div className='text2'>
                             <h3>2. Collaborate</h3>
                             <p>I’ll create a one-of-a-kind song inspired by your input.</p>
                         </div>
                     </div>
                     <div className="step">
-                        <div className='text'>
+                        <div className='text3'>
                             <h3>3. Receive Your Song</h3>
                             <p>Get a professional-quality track delivered to you.</p>
                         </div>

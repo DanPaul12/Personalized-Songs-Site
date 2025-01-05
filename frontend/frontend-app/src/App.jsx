@@ -15,7 +15,7 @@ function App() {
     return <div>
         <Router>
             <Routes>
-                <Route path="/" element={<SongSubmissionForm />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/submissions" element={<SubmissionsList />} />
                 <Route path="/order-form" element={<SongSubmissionForm />} />
