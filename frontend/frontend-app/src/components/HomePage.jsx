@@ -40,9 +40,8 @@ const HomePage = () => {
             {/* Portfolio Section */}
             <section className="portfolio">
                 <h2>Listen to the Music</h2>
-                <div className='portfolio-content'>
+                <div className="portfolio-grid">
                     <div className="spotify-player">
-                        {/* Spotify Embed */}
                         <iframe 
                             src="https://open.spotify.com/embed/track/173Q9olf7rOr0gQkGpK338?utm_source=generator" 
                             width="300" 
@@ -51,12 +50,9 @@ const HomePage = () => {
                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                             loading="lazy">
                         </iframe>
-                    </div>
-                    <div>
-                        <p>Our top songs have earned millions of streams across platforms</p>
+                        <p>Our most-streamed track with over 5 million plays!</p>
                     </div>
                     <div className="spotify-player">
-                        {/* Spotify Embed */}
                         <iframe 
                             src="https://open.spotify.com/embed/track/6G1LvBcrEEB4RNimTqFmKm?utm_source=generator" 
                             width="300" 
@@ -65,8 +61,21 @@ const HomePage = () => {
                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                             loading="lazy">
                         </iframe>
+                        <p>A heartfelt ballad cherished for its universal message.</p>
+                    </div>
+                    <div className="spotify-player">
+                        <iframe 
+                            src="https://open.spotify.com/embed/track/3FfJkqLbBl5X2Hlg9YopgG?utm_source=generator" 
+                            width="300" 
+                            height="380" 
+                            frameBorder="0" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                        </iframe>
+                        <p>Our newest release, showcasing fresh creativity.</p>
                     </div>
                 </div>
+                <button className="cta-button">Order Your Song</button>
             </section>
 
             {/* How It Works Section */}
@@ -80,11 +89,13 @@ const HomePage = () => {
                         </div>
                         <div className='stepimg'>
                             <img src='src/images/firstsong1.png'></img>
+                            <p className="caption">Share your unique experience with us.</p>
                         </div>
                     </div>
                     <div className="step" data-aos="fade-up">
                         <div className='stepimg'>
                             <img src='src/images/firstsongwedding.png'></img>
+                            <p className="caption">Share your unique experience with us.</p>
                         </div>
                         <div className='text2'>
                             <h3>2. Collaborate</h3>
@@ -98,6 +109,7 @@ const HomePage = () => {
                         </div>
                         <div className='stepimg'>
                             <img src='src/images/firstsong3.png'></img>
+                            <p className="caption">Share your unique experience with us.</p>
                         </div>
                     </div>
                 </div>
