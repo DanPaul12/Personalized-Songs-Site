@@ -14,12 +14,12 @@ load_dotenv()
 # Access the keys
 stripe_publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
 stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
+stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
 
-print(f"Publishable Key: {stripe_publishable_key}")
-print(f"Secret Key: {stripe_secret_key}")
+
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:thegoblet2@localhost/personalized_songs'
 db = SQLAlchemy(app)
@@ -51,6 +51,53 @@ class Payment(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 stripe.api_key = stripe_secret_key
+WEBHOOK_SECRET = stripe_webhook_endpoint
+
+def handle_payment_success(payment_intent):
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "succeeded"
+        db.session.commit()
+
+def handle_payment_failure(payment_intent):
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "failed"
+        db.session.commit()
+
+def handle_payment_canceled(payment_intent):
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "canceled"
+        db.session.commit()
+
+@app.route('/webhook', methods=['POST'])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get('Stripe-Signature')
+
+    try:
+        # Verify the webhook signature
+        event = stripe.Webhook.construct_event(payload, sig_header, WEBHOOK_SECRET)
+    except ValueError as e:
+        # Invalid payload
+        return "Invalid payload", 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return "Invalid signature", 400
+
+    # Handle the event
+    if event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']
+        handle_payment_success(payment_intent)
+    elif event['type'] == 'payment_intent.payment_failed':
+        payment_intent = event['data']['object']
+        handle_payment_failure(payment_intent)
+    elif event['type'] == 'payment_intent.canceled':
+        payment_intent = event['data']['object']
+        handle_payment_canceled(payment_intent)
+
+    return "Success", 200
 
 
 @app.route('/create-payment-intent', methods=['POST'])
