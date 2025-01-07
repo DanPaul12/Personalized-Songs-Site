@@ -92,7 +92,7 @@ const HomePage = () => {
                             <p className="caption">Taylor wanted a first dance song for her wedding</p>
                         </div>
                     </div>
-                    <div className="step" data-aos="fade-up">
+                    <div className="step2" data-aos="fade-up">
                         <div className='stepimg'>
                             <img src='src/images/firstsongwedding.png'></img>
                             <p className="caption">I sang her story over a strummed guitar with a waltz pattern</p>

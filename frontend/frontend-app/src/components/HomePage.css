@@ -1,83 +1,121 @@
-
+body {
+    overflow-x: hidden;
+    margin: 0;
+}
 
 /* Header Section */
 .hero-content {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: center;
+    
+    width: 100%;
+    align-items: center; /* Centered for smaller screens */
+    text-align: center; /* Maintains centered text alignment */
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('/src/images/dananddrumpress.jpg');
-    background-size: cover; /* Ensures the image covers the entire header */
+    background-size: cover !important; /* Ensures the image covers the entire header */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents tiling */
     color: #fff; /* Text color for better contrast */
     position: relative;
-    padding-bottom: 4em;
-    padding-top: 10em;
+    padding: 6em 1em; /* Adjusted padding for better scaling */
     border-radius: 5px;
+    margin: 0;
 }
 
 .hero-content h1 {
-    font-size: 3em;
-    margin: 20px;
+    font-size: 2em; /* Reduced size for smaller screens */
+    margin: 10px 0; /* Simplified margins */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: 'Poppins', sans-serif;
 }
 
 .hero-content h4 {  
-    margin-bottom: 1px;
-    margin-left: 20px;
+    margin-bottom: 10px; /* Adjusted margin for consistency */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-content p {
-    font-size: 1.2em;
-    margin: 10px;
-    margin-left: 20px;
+    font-size: 1em; /* Slightly smaller font for smaller screens */
+    margin: 10px 0; /* Simplified margin */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: 'Mansalva';
 }
 
-.about{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 4em 1em; /* Reduce padding on mobile */
+        background-position: center; /* Center the image */
+        background-size: contain; 
+    }
+
+    .hero-content h1 {
+        font-size: 1.8em; /* Smaller heading for mobile */
+    }
+
+    .hero-content h4 {
+        font-size: 1em; /* Adjusted size for consistency */
+    }
+
+    .hero-content p {
+        font-size: 0.9em; /* Smaller font for better spacing */
+    }
 }
+
+@media (min-width: 769px) {
+    .hero-content {
+        width: 100vw;
+}}
 
 h2{
     font-family: "Changa One";
 }
 
-.about p{
+/* About Section */
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em; /* Adds padding to the container for responsive spacing */
+    width: 100%; /* Ensures the container takes the full screen width */
+    box-sizing: border-box; /* Includes padding and border in the total width */
+}
+
+.about p {
     text-align: justify;
     text-justify: inter-word;
     font-family: 'Josefin Sans';
-    max-width: 80%;
+    max-width: 600px; /* Limit maximum width for larger screens */
+    width: 100%; /* Ensures it spans the full container on small screens */
     margin: 0 auto;
-    padding: 20px;
+    padding: 2em;
     line-height: 1.6;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #333;
-}
-
-.about p{
     background-color: rgba(247, 249, 180, 0.3);
-    padding: 2em 4em;
-    border-radius: 3em;
-    border: 2em rgba(128, 174, 133, 0.5) solid;
+    border-radius: 2em;
+    border: 1em rgba(128, 174, 133, 0.5) solid;
     box-sizing: border-box;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    
 }
 
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) {
+    .about p {
+        max-width: 50%; /* Reduce maximum width for smaller screens */
+        padding: 1.5em; /* Adjust padding to fit within the container */
+        font-size: 0.9rem; /* Slightly smaller font size */
+    }
+}
 
-/* Testimonials Section */
-.testimonial-section{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+@media (max-width: 480px) {
+    .about p {
+        max-width: 40%; /* Narrow the box further */
+        padding: 1em; /* Smaller padding for narrow screens */
+        font-size: 0.85rem; /* Smaller text for readability */
+    }
 }
 
 
@@ -123,6 +161,22 @@ h2{
     margin-bottom: 1em;
 }
 
+@media (max-width: 480px) {
+    .portfolio-grid {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-content: space-around;
+        gap: 20px;
+        
+    }
+
+    .portfolio {
+        text-align: center;
+        margin: 0 auto;
+    }
+}
 
 /* How it Works Section */
 .how-it-works{
@@ -143,6 +197,15 @@ h2{
     margin-bottom: 2em;
 }
 
+.how-it-works .step2{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
 .how-it-works .step .text1, .text2, .text3{
     display: flex;
     flex-direction: column;
@@ -156,7 +219,7 @@ h2{
     box-sizing: border-box;
 }
 
-.how-it-works .step .text2{
+.how-it-works .step2 .text2{
     background-color: rgba(181, 246, 188, 0.3);
     padding: 2em 4em;
     border-radius: 3em;
@@ -227,6 +290,49 @@ h2{
     display: none;
 }
 
+@media (max-width: 480px) {
+    .how-it-works .step{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 1em;
+    }
+
+    .how-it-works .step .text1{
+        max-width: 90vw;
+        margin-bottom: 1em;
+    }
+
+    .how-it-works .step .stepimg .caption{
+        max-width: 90vw;  
+    }
+
+    .how-it-works .step2 .stepimg .caption{
+        max-width: 90vw;  
+    }
+
+    .how-it-works .step .text3{
+        max-width: 90vw;
+        margin-bottom: 1em;
+    }
+
+    .how-it-works .step2{
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: wrap-reverse;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 1em;
+    }
+
+    .how-it-works .step2 .text2{
+        max-width: 90vw;
+        margin-bottom: 1em;
+    }
+}
+
 /* Call-to-Action Section */
 .cta {
     text-align: center;
@@ -272,4 +378,11 @@ h2{
 .footer p {
     margin: 0;
     font-size: 0.9em;
+}
+
+@media (max-width: 480px) {
+    .call-to-action h2{
+        max-width: 90vw;
+        margin: auto;
+    }
 }
