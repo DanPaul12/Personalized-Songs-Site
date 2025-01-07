@@ -17,7 +17,6 @@ stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
 stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
 
 
-
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 

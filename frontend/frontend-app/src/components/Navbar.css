@@ -1,11 +1,24 @@
 .navbar {
+    position: fixed; /* Ensures the navbar stays at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Spans the full width of the page */
+    z-index: 1000; /* Keeps the navbar above other content */
+    background-color: #fff; /* Ensures a visible background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for distinction */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
+
+body {
+    padding-top: 60px; /* Adjust based on your navbar height */
+}
+
+.navbar-container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto; /* Centers the navbar content */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    
-    color: rgb(0, 0, 0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand a {
@@ -34,14 +47,18 @@
     color: #f8f8c5; /* Hover color */
 }
 
+.nav-links button {
+    margin-right: 10px; /* Space between buttons */
+    padding: 8px 16px; /* Adjust button size */
+    white-space: nowrap; /* Prevent buttons from breaking into multiple lines */
+}
+
 @media (max-width: 768px) {
-    .navbar-links {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
+    .navbar-container {
+        flex-direction: column; /* Stack items vertically */
     }
 
-    .navbar-links.active {
-        display: flex;
+    .nav-links button {
+        margin: 5px 0; /* Reduce margins between buttons */
     }
 }

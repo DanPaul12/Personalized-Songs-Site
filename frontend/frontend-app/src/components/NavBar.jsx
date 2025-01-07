@@ -7,14 +7,16 @@ function Navbar() {
 
     return (
         <nav className="navbar">
-            <div className="navbar-brand">
-                <Link to="/">Home</Link>
-                
+            <div className='navbar-container'>
+                <div className="navbar-brand">
+                    <Link to="/">Home</Link>
+                    
+                </div>
+                <ul className="navbar-links">
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/song-levels">Order Song</Link></li>   
+                </ul>
             </div>
-            <ul className="navbar-links">
-                <li><Link to="/home">Home</Link></li>
-                <li><Link to="/song-levels">Order Song</Link></li>   
-            </ul>
         </nav>
     );
 }

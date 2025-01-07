@@ -10,15 +10,15 @@ import { Pagination, Navigation } from 'swiper/modules';
 const Testimonials = () => {
     const testimonials = [
         {
-            quote: "Dan’s song brought my wedding to life—now it has 1M streams on Spotify!",
+            quote: "“This may very well be the best email I've ever received. I absolutely love the song and the lyrics and I know Ben will too” - Adeline Carter",
             image: 'src/images/chazandlouise.png',
         },
         {
-            quote: "The most unique gift I’ve ever given. Truly unforgettable.",
+            quote: "“I listened to this song for the first time about 2 hours ago, and have listened to it like 10 times since. I LOVE it so much.” - Johnny Nava",
             image: 'src/images/johnnynava.png',
         },
         {
-            quote: "The most unique gift I’ve ever given. Truly unforgettable.",
+            quote: "“Holy SHIT that is good, oh my god, thank you so much idek what to say, thank you so so much i love it i know she will too” - Dylan Brown",
             image: 'src/images/adeline.jpg',
         },
         // Add more testimonials as needed
@@ -29,7 +29,7 @@ const Testimonials = () => {
             
             <Swiper
                 modules={[Pagination, Navigation]}
-                pagination={{ clickable: true }}
+                pagination={false} // Disables the dots
                 navigation
                 spaceBetween={30}
                 slidesPerView={1}
