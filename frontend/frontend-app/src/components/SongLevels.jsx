@@ -28,7 +28,7 @@ function SongLevels() {
     ];
 
     const handleCardClick = (level) => {
-        navigate(`/order-form?level=${level}`);
+        navigate(`/personalized-song-order-form?level=${level}`);
     };
 
     return (

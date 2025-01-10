@@ -19,7 +19,7 @@ const BlogList = () => {
       <h1>Blog Posts</h1>
       {blogs.map(blog => (
         <div key={blog.id}>
-          <h2><Link to={`/blogs/${blog.slug}`}>{blog.title}</Link></h2>
+          <h2><Link to={`/personalized-songs-blogs/${blog.slug}`}>{blog.title}</Link></h2>
           <p>{blog.category}</p>
           <p>By {blog.author} on {new Date(blog.created_at).toLocaleDateString()}</p>
         </div>

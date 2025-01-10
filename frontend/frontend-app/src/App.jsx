@@ -11,6 +11,7 @@ import BlogList from './components/blogfiles/BlogList';
 import BlogDetails from './components/blogfiles/BlogDetails';
 import BlogForm from './components/blogfiles/BlogForm';
 import AOS from 'aos';
+import { Helmet } from "react-helmet";
 import 'aos/dist/aos.css';
 
 
@@ -23,17 +24,24 @@ function App() {
     
 
     return <div>
+        <Helmet>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Dan & Drum | Personalized Songs</title>
+            <meta name="description" content="Dan & Drum crafts personalized songs tailored to your special moments. Explore custom music today." />
+            <meta name="keywords" content="personalized songs, custom music, indie artists, gift ideas" />
+        </Helmet>
         <Router>
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/home" element={<HomePage />} />
+                <Route path="/personalized-songs" element={<HomePage />} />
                 <Route path="/submissions" element={<SubmissionsList />} />
-                <Route path="/order-form" element={<SongSubmissionForm />} />
-                <Route path="/song-levels" element={<SongLevels />} />
+                <Route path="/personalized-song-order-form" element={<SongSubmissionForm />} />
+                <Route path="/personalized-song-levels" element={<SongLevels />} />
                 <Route path="/payment-page" element={<PaymentPage />} />
-                <Route path="/blogs" element={<BlogList />} />
-                <Route path="/blogs/:slug" element={<BlogDetails />} />
+                <Route path="/personalized-songs-blogs" element={<BlogList />} />
+                <Route path="/personalized-songs-blogs/:slug" element={<BlogDetails />} />
                 <Route path="/admin/blogs/new" element={<BlogForm />} />
                 <Route path="/admin/blogs/:id/edit" element={<BlogForm />} />
             </Routes>

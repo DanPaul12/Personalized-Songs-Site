@@ -2,17 +2,24 @@ import React from 'react';
 import './HomePage.css'; 
 import { useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
+import { Helmet } from "react-helmet";
+
 
 const HomePage = () => {
 
     const navigate = useNavigate();
 
     const handleGetStarted = () => {
-        navigate('/song-levels');
+        navigate('/personalized-song-levels');
     };
     
     return (
         <div className="homepage">
+            <Helmet>
+                <title>Personalized Songs for Any Occasion | Dan & Drum</title>
+                <meta name="description" content="Order personalized songs crafted uniquely for weddings, birthdays, anniversaries, and more. A heartfelt gift from Dan & Drum." />
+                <meta name="keywords" content="personalized songs, custom songs, unique gifts, wedding songs, birthday songs" />
+            </Helmet>
             {/* Hero Section */}
             <section className="hero">
                 <div className="hero-content" data-aos="fade-up">

@@ -13,8 +13,8 @@ function Navbar() {
                     
                 </div>
                 <ul className="navbar-links">
-                    <li><Link to="/home">Home</Link></li>
-                    <li><Link to="/song-levels">Order Song</Link></li>   
+                    <li><Link to="/personalized-songs-blogs">Blogs</Link></li>
+                    <li><Link to="/personalized-song-levels">Order Song</Link></li>   
                 </ul>
             </div>
         </nav>
