@@ -5,6 +5,7 @@ from datetime import datetime
 import stripe
 import traceback
 import json
+from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
 
@@ -15,12 +16,21 @@ load_dotenv()
 stripe_publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
 stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
 stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
+password = os.getenv("DB_PASSWORD")
 
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:thegoblet2@localhost/personalized_songs'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
+app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_DEBUG'] = True
+
+mail = Mail(app)
 db = SQLAlchemy(app)
 
 
@@ -36,9 +46,6 @@ class Order(db.Model):
     status = db.Column(db.String(50), default='pending', nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=True)
 
-    # Relationship with Payment table
-    #payments = db.relationship('Payment', backref='order', lazy=True)
-
 
 class Payment(db.Model):
     __tablename__ = 'payments' 
@@ -49,14 +56,36 @@ class Payment(db.Model):
     status = db.Column(db.String(50), nullable=False, default="pending")  # e.g., pending, succeeded, failed
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), unique=True, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    tags = db.Column(db.JSON, default=[])
+    author = db.Column(db.String(100), default="Admin")
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
+    published = db.Column(db.Boolean, default=False)
+
+    
+
 stripe.api_key = stripe_secret_key
 WEBHOOK_SECRET = stripe_webhook_endpoint
+
+#----------------------------------------------------------------
 
 def handle_payment_success(payment_intent):
     payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
     if payment:
         payment.status = "succeeded"
         db.session.commit()
+
+        order = Order.query.filter_by(email=payment.email).order_by(Order.created_at.desc()).first()
+        if order:
+            send_confirmation_email(order.email, order.song_details)
+            print(f"Confirmation email sent to {order.email} for order ID {order.id}.")
 
 def handle_payment_failure(payment_intent):
     payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
@@ -69,6 +98,36 @@ def handle_payment_canceled(payment_intent):
     if payment:
         payment.status = "canceled"
         db.session.commit()
+
+def send_confirmation_email(to_email, song_details):
+    try:
+        msg = Message(
+            subject="Your Custom Song Order Confirmation",
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[to_email],
+            body=f"Thank you for your order!\n\nYour song details:\n{song_details}"
+        )
+        mail.send(msg)
+        print("Confirmation email sent successfully.")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
+
+#------------------------------------------------------------------------------------
+
+@app.route('/test-email', methods=['GET'])
+def test_email():
+    try:
+        msg = Message(
+            subject="Test Email",
+            sender=app.config['MAIL_USERNAME'],
+            recipients=["dan.paul.schechter@gmail.com"],
+            body="This is a test email from the app."
+        )
+        mail.send(msg)
+        return "Test email sent successfully!"
+    except Exception as e:
+        return f"Error sending test email: {e}", 500
 
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
@@ -105,6 +164,7 @@ def create_payment_intent():
         data = request.json
         amount = data.get('amount', 0)
         email = data.get('email')
+        song_details = data.get('song_details', 'No details provided')
         intent = stripe.PaymentIntent.create(
             amount=amount,
             currency='usd',
@@ -136,11 +196,14 @@ def update_payment_status():
         if payment:
             payment.status = status
             db.session.commit()
+            
             return jsonify({"message": "Payment status updated successfully."})
         else:
             return jsonify({"error": "Payment not found."}), 404
     except Exception as e:
         return jsonify(error=str(e)), 400
+    
+#------------------------------------------------------------------------------------
 
 @app.route('/api/song-submissions', methods=['POST'])
 def submit_song():
@@ -170,9 +233,25 @@ def submit_song():
         db.session.add(new_order)
         db.session.commit()
 
-        return jsonify({'message': 'Song submission received!'}), 201
+        return jsonify({'message': 'Song submission received!', "order_id": new_order.id}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/api/song-submissions/<int:order_id>', methods=['GET'])
+def get_song_submission(order_id):
+    try:
+        order = Order.query.get(order_id)
+        if not order:
+            return jsonify({"error": "Order not found"}), 404
+
+        return jsonify({
+            "id": order.id,
+            "song_details": order.song_details,
+            "status": order.status,
+            "created_at": order.created_at
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
 @app.route('/api/song-submissions', methods=['GET'])
 def get_submissions():
@@ -189,6 +268,102 @@ def get_submissions():
         return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+#------------------------------------------------------------------------------------
+
+@app.route('/api/blogs', methods=['POST'])
+def create_blog():
+    data = request.json
+    try:
+        blog = Blog(
+            title=data['title'],
+            slug=data['slug'],
+            content=data['content'],
+            category=data['category'],
+            tags=data.get('tags', []),
+            author=data.get('author', 'Admin'),
+            published=data.get('published', False)
+        )
+        db.session.add(blog)
+        db.session.commit()
+        return jsonify({'message': 'Blog post created!', 'id': blog.id}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    
+@app.route('/api/blogs', methods=['GET'])
+def get_blogs():
+    try:
+        blogs = Blog.query.all()
+        result = [
+            {
+                "id": blog.id,
+                "title": blog.title,
+                "slug": blog.slug,
+                "category": blog.category,
+                "tags": blog.tags,
+                "author": blog.author,
+                "created_at": blog.created_at,
+                "published": blog.published
+            } for blog in blogs
+        ]
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/api/blogs/<slug>', methods=['GET'])
+def get_blog_by_slug(slug):
+    blog = Blog.query.filter_by(slug=slug).first()
+    if not blog:
+        return jsonify({"error": "Blog not found"}), 404
+    
+    # Directly construct the response as a dictionary
+    response = {
+        "id": blog.id,
+        "title": blog.title,
+        "slug": blog.slug,
+        "content": blog.content,
+        "category": blog.category,
+        "tags": blog.tags,  # Assuming tags are stored as JSON
+        "published": blog.published,
+        "created_at": blog.created_at,
+    }
+    
+    return jsonify(response)
+    
+@app.route('/api/blogs/<int:blog_id>', methods=['PUT'])
+def update_blog(blog_id):
+    data = request.json
+    try:
+        blog = Blog.query.get(blog_id)
+        if not blog:
+            return jsonify({'error': 'Blog not found'}), 404
+        
+        blog.title = data.get('title', blog.title)
+        blog.slug = data.get('slug', blog.slug)
+        blog.content = data.get('content', blog.content)
+        blog.category = data.get('category', blog.category)
+        blog.tags = data.get('tags', blog.tags)
+        blog.author = data.get('author', blog.author)
+        blog.published = data.get('published', blog.published)
+        
+        db.session.commit()
+        return jsonify({'message': 'Blog post updated!'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    
+@app.route('/api/blogs/<int:blog_id>', methods=['DELETE'])
+def delete_blog(blog_id):
+    try:
+        blog = Blog.query.get(blog_id)
+        if not blog:
+            return jsonify({'error': 'Blog not found'}), 404
+        
+        db.session.delete(blog)
+        db.session.commit()
+        return jsonify({'message': 'Blog post deleted!'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

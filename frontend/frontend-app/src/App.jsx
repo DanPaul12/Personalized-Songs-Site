@@ -7,6 +7,9 @@ import HomePage from './components/HomePage';
 import SongLevels from './components/SongLevels';
 import PaymentPage from './components/PaymentPage';
 import Navbar from './components/NavBar';
+import BlogList from './components/blogfiles/BlogList';
+import BlogDetails from './components/blogfiles/BlogDetails';
+import BlogForm from './components/blogfiles/BlogForm';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -29,6 +32,10 @@ function App() {
                 <Route path="/order-form" element={<SongSubmissionForm />} />
                 <Route path="/song-levels" element={<SongLevels />} />
                 <Route path="/payment-page" element={<PaymentPage />} />
+                <Route path="/blogs" element={<BlogList />} />
+                <Route path="/blogs/:slug" element={<BlogDetails />} />
+                <Route path="/admin/blogs/new" element={<BlogForm />} />
+                <Route path="/admin/blogs/:id/edit" element={<BlogForm />} />
             </Routes>
         </Router>
     </div>;

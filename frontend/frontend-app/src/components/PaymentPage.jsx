@@ -12,14 +12,44 @@ function PaymentForm() {
     const elements = useElements();
     const location = useLocation();
 
+    // Extract query parameters
     const queryParams = new URLSearchParams(location.search);
-    const emailFromQuery = queryParams.get('email') || '';
-    const priceFromQuery = queryParams.get('price') || 0;
+    const emailFromQuery = queryParams.get("email") || "";
+    const priceFromQuery = queryParams.get("price") || 0;
+    const orderIdFromQuery = queryParams.get("order_id"); // Pass order_id in the query string
 
+    // States
     const [email] = useState(emailFromQuery); // Email is pre-filled and uneditable
     const [amount] = useState(priceFromQuery); // Amount is pre-filled and uneditable
+    const [songDetails, setSongDetails] = useState(""); // Dynamic song details
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [isFetchingDetails, setIsFetchingDetails] = useState(true);
+
+    useEffect(() => {
+        // Fetch song details using the order_id
+        async function fetchSongDetails() {
+            if (!orderIdFromQuery) {
+                setMessage("Order ID is missing in the URL.");
+                setIsFetchingDetails(false);
+                return;
+            }
+
+            try {
+                const response = await axios.get(
+                    `http://127.0.0.1:5000/api/song-submissions/${orderIdFromQuery}`
+                );
+                setSongDetails(response.data.song_details); // Update state with song details
+            } catch (error) {
+                setMessage("Failed to fetch song details. Please try again.");
+                console.error("Error fetching song details:", error);
+            } finally {
+                setIsFetchingDetails(false);
+            }
+        }
+
+        fetchSongDetails();
+    }, [orderIdFromQuery]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +65,8 @@ function PaymentForm() {
         try {
             const response = await axios.post("http://127.0.0.1:5000/create-payment-intent", {
                 amount: amount * 100, // Convert to cents
-                email: email
+                email: email,
+                song_details: songDetails, // Pass song details
             });
 
             const clientSecret = response.data.clientSecret; // Extract the clientSecret string
@@ -64,6 +95,10 @@ function PaymentForm() {
         }
     };
 
+    if (isFetchingDetails) {
+        return <p>Loading song details...</p>;
+    }
+
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
             <h2>Make a Payment</h2>
@@ -82,6 +117,15 @@ function PaymentForm() {
                     type="number"
                     value={amount}
                     disabled
+                />
+            </label>
+            <br />
+            <label>
+                Song Details:
+                <textarea
+                    value={songDetails}
+                    disabled
+                    rows="3"
                 />
             </label>
             <br />

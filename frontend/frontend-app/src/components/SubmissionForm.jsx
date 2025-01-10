@@ -37,10 +37,18 @@ function SongSubmissionForm() {
         e.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/song-submissions', formData);
+            
+            const { order_id } = response.data;
+
+            if (!order_id) {
+                alert('Submission succeeded, but order ID is missing. Please contact support.');
+                return;
+            }
+
             alert('Song submitted successfully: ' + response.data.message);
 
             // Redirect to the payment page with song details
-            navigate(`/payment-page?email=${encodeURIComponent(formData.email)}&price=${formData.price}`);
+            navigate(`/payment-page?email=${encodeURIComponent(formData.email)}&price=${formData.price}&order_id=${order_id}`);
         } catch (error) {
             console.error('Error submitting song:', error);
             alert('Failed to submit the song. Please try again.');
