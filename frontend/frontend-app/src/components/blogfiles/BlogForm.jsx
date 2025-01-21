@@ -8,6 +8,8 @@ const BlogForm = ({ existingBlog = null }) => {
     content: existingBlog?.content || '',
     category: existingBlog?.category || '',
     tags: existingBlog?.tags || [],
+    author: existingBlog?.author || '', // New field
+    imageUrl: existingBlog?.imageUrl || '', // New field
     published: existingBlog?.published || false,
   });
 
@@ -36,6 +38,8 @@ const BlogForm = ({ existingBlog = null }) => {
           content: '',
           category: '',
           tags: [],
+          author: '',
+          imageUrl: '',
           published: false,
         });
       }
@@ -72,6 +76,14 @@ const BlogForm = ({ existingBlog = null }) => {
             value={formData.tags.join(',')}
             onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',') })}
           />
+        </label>
+        <label>
+          Author:
+          <input type="text" name="author" value={formData.author} onChange={handleChange} />
+        </label>
+        <label>
+          Image URL:
+          <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
         </label>
         <label>
           Published:

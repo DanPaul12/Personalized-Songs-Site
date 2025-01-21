@@ -64,7 +64,8 @@ class Blog(db.Model):
     content = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(100), nullable=False)
     tags = db.Column(db.JSON, default=[])
-    author = db.Column(db.String(100), default="Admin")
+    author = db.Column(db.String(255), nullable=False, default='Anonymous')  # New
+    imageUrl = db.Column(db.String(2083))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
     published = db.Column(db.Boolean, default=False)
@@ -304,7 +305,8 @@ def get_blogs():
                 "tags": blog.tags,
                 "author": blog.author,
                 "created_at": blog.created_at,
-                "published": blog.published
+                "published": blog.published,
+                "imageURL": blog.imageUrl
             } for blog in blogs
         ]
         return jsonify(result), 200
