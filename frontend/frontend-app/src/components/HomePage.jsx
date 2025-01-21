@@ -3,6 +3,9 @@ import './HomePage.css';
 import { useNavigate } from 'react-router-dom';
 import Testimonials from './Testimonials';
 import { Helmet } from "react-helmet";
+import FirstSong1 from '/src/images/firstsong1.png'
+import FirstSong3 from '/src/images/firstsong3.png'
+import FirstSong2 from '/src/images/firstsongwedding.png'
 
 
 const HomePage = () => {
@@ -95,13 +98,13 @@ const HomePage = () => {
                                 <p>Fill out a quick form with details about your song.</p>    
                         </div>
                         <div className='stepimg'>
-                            <img src='src/images/firstsong1.png'></img>
+                            <img src={FirstSong1}></img>
                             <p className="caption">Taylor wanted a first dance song for her wedding</p>
                         </div>
                     </div>
                     <div className="step2" data-aos="fade-up">
                         <div className='stepimg'>
-                            <img src='src/images/firstsongwedding.png'></img>
+                            <img src={FirstSong2}></img>
                             <p className="caption">I sang her story over a strummed guitar with a waltz pattern</p>
                         </div>
                         <div className='text2'>
@@ -115,7 +118,7 @@ const HomePage = () => {
                             <p>Get a professional-quality track delivered to you.</p>
                         </div>
                         <div className='stepimg'>
-                            <img src='src/images/firstsong3.png'></img>
+                            <img src={FirstSong3}></img>
                             <p className="caption">When the big day came, they danced to it in front of friends and fam!</p>
                         </div>
                     </div>

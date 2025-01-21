@@ -4,6 +4,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './Testimonials.css';
+import Chaz from '/src/images/chazandlouise.png'
+import Johnny from '/src/images/johnnynava.png'
+import Addy from '/src/images/adeline.jpg'
 
 import { Pagination, Navigation } from 'swiper/modules';
 
@@ -11,17 +14,17 @@ const Testimonials = () => {
     const testimonials = [
         {
             quote: "“This may very well be the best email I've ever received. I absolutely love the song and the lyrics and I know Ben will too” - Adeline Carter",
-            image: 'src/images/chazandlouise.png',
+            image: Chaz,
         },
         {
             quote: "“I listened to this song for the first time about 2 hours ago, and have listened to it like 10 times since. I LOVE it so much.” - Johnny Nava",
-            image: 'src/images/johnnynava.png',
+            image: Johnny,
         },
         {
             quote: "“Holy SHIT that is good, oh my god, thank you so much idek what to say, thank you so so much i love it i know she will too” - Dylan Brown",
-            image: 'src/images/adeline.jpg',
+            image: Addy,
         },
-        // Add more testimonials as needed
+
     ];
 
     return (

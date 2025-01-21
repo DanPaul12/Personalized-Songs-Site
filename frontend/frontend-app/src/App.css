@@ -3,7 +3,7 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-image: url('src/images/pinkpaper2.jpg');
+  background-image: url('images/pinkpaper2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
