@@ -5,8 +5,12 @@
 }
 
 .song-levels h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+    font-family: "Changa One";
+    color: rgb(75, 70, 70);
+    letter-spacing: .05em;
+    line-height: 1.6em;
+    text-shadow: 2px 2px 5px rgba(94, 5, 102, 0.1);
+    margin-bottom: 40px;
 }
 
 .levels-container {

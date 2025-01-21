@@ -24,19 +24,20 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 2em; /* Reduced size for smaller screens */
+    font-size: 2.7em; /* Reduced size for smaller screens */
     margin: 10px 0; /* Simplified margins */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: 'Poppins', sans-serif;
 }
 
 .hero-content h4 {  
+    font-size: 1.2em;
     margin-bottom: 10px; /* Adjusted margin for consistency */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-content p {
-    font-size: 1em; /* Slightly smaller font for smaller screens */
+    font-size: 1.3em; /* Slightly smaller font for smaller screens */
     margin: 10px 0; /* Simplified margin */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: 'Mansalva';
@@ -70,6 +71,11 @@ body {
 
 h2{
     font-family: "Changa One";
+    color: rgb(75, 70, 70);
+    letter-spacing: .05em;
+    line-height: 1.6em;
+    text-shadow: 2px 2px 5px rgba(94, 5, 102, 0.1);
+    font-size: 2em;
 }
 
 /* About Section */
