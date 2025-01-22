@@ -23,14 +23,16 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
+'''
 app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
 app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
 app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 app.config['MAIL_DEBUG'] = True
-
 mail = Mail(app)
+'''
+
 db = SQLAlchemy(app)
 
 
@@ -73,7 +75,7 @@ class Blog(db.Model):
     
 
 stripe.api_key = stripe_secret_key
-WEBHOOK_SECRET = stripe_webhook_endpoint
+#WEBHOOK_SECRET = stripe_webhook_endpoint
 
 #----------------------------------------------------------------
 
@@ -85,7 +87,7 @@ def handle_payment_success(payment_intent):
 
         order = Order.query.filter_by(email=payment.email).order_by(Order.created_at.desc()).first()
         if order:
-            send_confirmation_email(order.email, order.song_details)
+            #send_confirmation_email(order.email, order.song_details)
             print(f"Confirmation email sent to {order.email} for order ID {order.id}.")
 
 def handle_payment_failure(payment_intent):
@@ -100,6 +102,9 @@ def handle_payment_canceled(payment_intent):
         payment.status = "canceled"
         db.session.commit()
 
+
+#------------------------------------------------------------------------------------
+'''
 def send_confirmation_email(to_email, song_details):
     try:
         msg = Message(
@@ -112,9 +117,6 @@ def send_confirmation_email(to_email, song_details):
         print("Confirmation email sent successfully.")
     except Exception as e:
         print(f"Error sending email: {e}")
-
-
-#------------------------------------------------------------------------------------
 
 @app.route('/test-email', methods=['GET'])
 def test_email():
@@ -157,7 +159,7 @@ def stripe_webhook():
         handle_payment_canceled(payment_intent)
 
     return "Success", 200
-
+'''
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment_intent():
