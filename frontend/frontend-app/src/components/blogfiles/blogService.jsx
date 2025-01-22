@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:5000/api/blogs';
+const API_BASE_URL = 'https://api.dananddrumpersonalizedsongs.com/api/blogs';
 
 export const getAllBlogs = async () => {
   const response = await axios.get(API_BASE_URL);
@@ -8,7 +8,7 @@ export const getAllBlogs = async () => {
 };
 
 export const getBlogBySlug = async (slug) => {
-  const response = await fetch(`http://127.0.0.1:5000/api/blogs/${slug}`);
+  const response = await fetch(`https://api.dananddrumpersonalizedsongs.com/api/blogs/${slug}`);
   if (!response.ok) {
     throw new Error('Failed to fetch blog');
   }

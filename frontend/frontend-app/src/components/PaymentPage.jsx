@@ -37,7 +37,7 @@ function PaymentForm() {
 
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:5000/api/song-submissions/${orderIdFromQuery}`
+                    `https://api.dananddrumpersonalizedsongs.com/api/song-submissions/${orderIdFromQuery}`
                 );
                 setSongDetails(response.data.song_details); // Update state with song details
             } catch (error) {
@@ -63,7 +63,7 @@ function PaymentForm() {
         }
 
         try {
-            const response = await axios.post("http://127.0.0.1:5000/create-payment-intent", {
+            const response = await axios.post("https://api.dananddrumpersonalizedsongs.com/create-payment-intent", {
                 amount: amount * 100, // Convert to cents
                 email: email,
                 song_details: songDetails, // Pass song details
@@ -82,7 +82,7 @@ function PaymentForm() {
                 setMessage(error.message);
             } else {
                 setMessage("Payment successful! Thank you.");
-                await axios.post("http://127.0.0.1:5000/update-payment-status", {
+                await axios.post("https://api.dananddrumpersonalizedsongs.com/update-payment-status", {
                     paymentIntentId: clientSecret.split("_secret")[0],
                     status: "succeeded",
                 });

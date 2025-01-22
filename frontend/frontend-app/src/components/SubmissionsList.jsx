@@ -5,7 +5,7 @@ function SubmissionsList() {
     const [submissions, setSubmissions] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/song-submissions')
+        axios.get('https://api.dananddrumpersonalizedsongs.com/api/song-submissions')
             .then(response => setSubmissions(response.data))
             .catch(error => console.error('Error fetching submissions:', error));
     }, []);

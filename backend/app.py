@@ -20,7 +20,7 @@ password = os.getenv("DB_PASSWORD")
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
 '''
