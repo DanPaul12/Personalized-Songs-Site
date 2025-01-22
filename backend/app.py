@@ -22,16 +22,8 @@ password = os.getenv("DB_PASSWORD")
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
-'''
-app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
-app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
-app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == "True"
-app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
-app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
-app.config['MAIL_DEBUG'] = True
-mail = Mail(app)
-'''
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
 db = SQLAlchemy(app)
 
@@ -101,65 +93,6 @@ def handle_payment_canceled(payment_intent):
     if payment:
         payment.status = "canceled"
         db.session.commit()
-
-
-#------------------------------------------------------------------------------------
-'''
-def send_confirmation_email(to_email, song_details):
-    try:
-        msg = Message(
-            subject="Your Custom Song Order Confirmation",
-            sender=app.config['MAIL_USERNAME'],
-            recipients=[to_email],
-            body=f"Thank you for your order!\n\nYour song details:\n{song_details}"
-        )
-        mail.send(msg)
-        print("Confirmation email sent successfully.")
-    except Exception as e:
-        print(f"Error sending email: {e}")
-
-@app.route('/test-email', methods=['GET'])
-def test_email():
-    try:
-        msg = Message(
-            subject="Test Email",
-            sender=app.config['MAIL_USERNAME'],
-            recipients=["dan.paul.schechter@gmail.com"],
-            body="This is a test email from the app."
-        )
-        mail.send(msg)
-        return "Test email sent successfully!"
-    except Exception as e:
-        return f"Error sending test email: {e}", 500
-
-@app.route('/webhook', methods=['POST'])
-def stripe_webhook():
-    payload = request.get_data(as_text=True)
-    sig_header = request.headers.get('Stripe-Signature')
-
-    try:
-        # Verify the webhook signature
-        event = stripe.Webhook.construct_event(payload, sig_header, WEBHOOK_SECRET)
-    except ValueError as e:
-        # Invalid payload
-        return "Invalid payload", 400
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return "Invalid signature", 400
-
-    # Handle the event
-    if event['type'] == 'payment_intent.succeeded':
-        payment_intent = event['data']['object']
-        handle_payment_success(payment_intent)
-    elif event['type'] == 'payment_intent.payment_failed':
-        payment_intent = event['data']['object']
-        handle_payment_failure(payment_intent)
-    elif event['type'] == 'payment_intent.canceled':
-        payment_intent = event['data']['object']
-        handle_payment_canceled(payment_intent)
-
-    return "Success", 200
-'''
 
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment_intent():
@@ -371,3 +304,4 @@ def delete_blog(blog_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    db.create_all()
