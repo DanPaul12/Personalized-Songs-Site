@@ -69,6 +69,14 @@ class Blog(db.Model):
 stripe.api_key = stripe_secret_key
 #WEBHOOK_SECRET = stripe_webhook_endpoint
 
+
+@app.route('/init-db', methods=['GET'])
+def init_db():
+    try:
+        db.create_all()
+        return jsonify({"message": "Database initialized successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 #----------------------------------------------------------------
 
 def handle_payment_success(payment_intent):
@@ -304,4 +312,4 @@ def delete_blog(blog_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    db.create_all()
+    
