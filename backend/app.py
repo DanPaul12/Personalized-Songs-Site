@@ -77,6 +77,12 @@ def init_db():
         return jsonify({"message": "Database initialized successfully!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/check-tables')
+def check_tables():
+    inspector = db.inspect(db.engine)
+    tables = inspector.get_table_names()
+    return jsonify({"tables": tables})
 #----------------------------------------------------------------
 
 def handle_payment_success(payment_intent):
