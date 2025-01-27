@@ -20,7 +20,7 @@ jobs:
           python-version: 3.9  # Match your app's Python version
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r backend/requirements.txt
 
       - name: Run tests
         run: pytest
