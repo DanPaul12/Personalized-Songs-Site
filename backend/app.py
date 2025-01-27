@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -83,6 +83,15 @@ def check_tables():
     inspector = db.inspect(db.engine)
     tables = inspector.get_table_names()
     return jsonify({"tables": tables})
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react(path):
+    if path != "" and os.path.exists(f"frontend/frontend-app/build/{path}"):
+        return send_from_directory('frontend/frontend-app/build', path)
+    else:
+        return send_from_directory('frontend/frontend-app/build', 'index.html')
+    
 #----------------------------------------------------------------
 
 def handle_payment_success(payment_intent):
