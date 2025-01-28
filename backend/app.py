@@ -9,6 +9,9 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
 from config import init_app, init_stripe
+from models import db, Order, Payment, Blog
+
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,16 +24,16 @@ stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
 password = os.getenv("DB_PASSWORD")
 '''
 
-
 app = Flask(__name__)
 init_app(app)
 init_stripe()
 CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
+db.init_app(app)
 
-
+'''
 class Order(db.Model):
     __tablename__ = 'orders'  # Match the new table name in MySQL
     id = db.Column(db.Integer, primary_key=True)
@@ -67,7 +70,7 @@ class Blog(db.Model):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
     published = db.Column(db.Boolean, default=False)
 
-    
+'''   
 
 #stripe.api_key = stripe_secret_key
 
