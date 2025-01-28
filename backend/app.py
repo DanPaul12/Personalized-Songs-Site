@@ -8,22 +8,25 @@ import json
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
+from config import init_app, init_stripe
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Access the keys
+'''
 stripe_publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
 stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
 stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
 password = os.getenv("DB_PASSWORD")
+'''
 
 
 app = Flask(__name__)
+init_app(app)
+init_stripe()
 CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://root:{password}@localhost/personalized_songs'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
 db = SQLAlchemy(app)
 
@@ -66,8 +69,7 @@ class Blog(db.Model):
 
     
 
-stripe.api_key = stripe_secret_key
-#WEBHOOK_SECRET = stripe_webhook_endpoint
+#stripe.api_key = stripe_secret_key
 
 
 @app.route('/init-db', methods=['GET'])
