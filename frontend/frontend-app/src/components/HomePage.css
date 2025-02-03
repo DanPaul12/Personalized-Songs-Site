@@ -1,3 +1,14 @@
+
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../assets/Myfont1-Regular.otf') format('opentype'),
+         url('../assets/Myfont1-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
 body {
     overflow-x: hidden;
     margin: 0;
@@ -70,12 +81,12 @@ body {
 }}
 
 h2{
-    font-family: "Changa One";
+    font-family: 'CustomFont', sans-serif;
     color: rgb(75, 70, 70);
     letter-spacing: .05em;
     line-height: 1.6em;
-    text-shadow: 2px 2px 5px rgba(94, 5, 102, 0.1);
-    font-size: 2em;
+    text-shadow: 2px 2px 5px rgba(94, 5, 102, .5);
+    font-size: 2.6em;
 }
 
 /* About Section */
@@ -201,6 +212,11 @@ h2{
     justify-content: space-around;
     align-items: center;
     margin-bottom: 2em;
+    background-color: rgba(215, 234, 109, 0.1);
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border: solid rgba(89, 145, 80, .5);
+
 }
 
 .how-it-works .step2{
@@ -208,7 +224,11 @@ h2{
     flex-direction: row;
     flex-wrap: wrap-reverse;
     justify-content: space-around;
+    background-color: rgba(109, 234, 209, 0.1);
+    border: solid rgba(145, 80, 127, 0.5);
     align-items: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
     margin-bottom: 2em;
 }
 

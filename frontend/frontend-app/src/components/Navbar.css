@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../assets/Myfont1-Regular.otf') format('opentype'),
+         url('../assets/Myfont1-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
 .navbar {
     position: fixed; /* Ensures the navbar stays at the top */
     top: 0;
@@ -7,6 +15,7 @@
     background-color: #fff; /* Ensures a visible background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for distinction */
     padding: 10px 20px; /* Adjust padding as needed */
+    font-family: 'CustomFont';
 }
 
 body {
@@ -23,7 +32,8 @@ body {
 
 .navbar-brand a {
     text-decoration: none;
-    font-size: 1.5rem;
+    font: 'CustomFont';
+    font-size: 2rem;
     font-weight: bold;
     color: rgb(0, 0, 0);
 }
@@ -41,6 +51,7 @@ body {
     color: rgb(0, 0, 0);
     font-weight: 500;
     transition: color 0.3s;
+    font-size: 1.5em;
 }
 
 .navbar-links li a:hover {

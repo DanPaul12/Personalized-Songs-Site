@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import basic from '/src/images/basic.jpg'
+import premium from '/src/images/premium.jpg'
+import deluxe from '/src/images/deluxe.jpg'
 import './SongLevels.css';
 
 
@@ -10,19 +13,19 @@ function SongLevels() {
         {
             level: 'basic',
             title: 'Basic',
-            image: 'basic-level.jpg', // Replace with your image paths
+            image: basic, // Replace with your image paths
             description: 'A simple yet heartfelt custom song.',
         },
         {
             level: 'premium',
             title: 'Premium',
-            image: 'premium-level.jpg', // Replace with your image paths
+            image: premium, // Replace with your image paths
             description: 'Enhanced production and creative lyrics.',
         },
         {
             level: 'deluxe',
             title: 'Deluxe',
-            image: 'deluxe-level.jpg', // Replace with your image paths
+            image: deluxe, // Replace with your image paths
             description: 'Top-notch production and a personal touch.',
         },
     ];
