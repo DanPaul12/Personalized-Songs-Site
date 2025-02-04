@@ -316,6 +316,8 @@ h2{
     display: none;
 }
 
+
+
 @media (max-width: 480px) {
     .how-it-works .step{
         display: flex;
