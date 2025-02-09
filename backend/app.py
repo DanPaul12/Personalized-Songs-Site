@@ -15,7 +15,8 @@ from models import db, Order, Payment, Blog
 app = Flask(__name__)
 init_app(app)
 init_stripe()
-CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
+#CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 db.init_app(app)
 
@@ -44,6 +45,38 @@ def serve_react(path):
     
 #----------------------------------------------------------------
 
+WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
+
+def handle_payment_success(payment_intent):
+    """Handles successful payments from Stripe webhooks."""
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "succeeded"
+        db.session.commit()
+
+        # Find the most recent order linked to the payment email
+        order = Order.query.filter_by(email=payment.email).order_by(Order.created_at.desc()).first()
+        if order:
+            print(f"Confirmation email sent to {order.email} for order ID {order.id}.")
+            # Send confirmation email (uncomment when email function is ready)
+            # send_confirmation_email(order.email, order.song_details)
+
+
+def handle_payment_failure(payment_intent):
+    """Handles failed payments."""
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "failed"
+        db.session.commit()
+
+
+def handle_payment_canceled(payment_intent):
+    """Handles canceled payments."""
+    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+    if payment:
+        payment.status = "canceled"
+        db.session.commit()
+'''
 def handle_payment_success(payment_intent):
     payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
     if payment:
@@ -66,7 +99,81 @@ def handle_payment_canceled(payment_intent):
     if payment:
         payment.status = "canceled"
         db.session.commit()
+'''
+@app.route('/webhook', methods=['POST'])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get('Stripe-Signature')
+    print(f"Stripe Signature: {sig_header}")
 
+    try:
+        # Verify the webhook signature
+        event = stripe.Webhook.construct_event(payload, sig_header, WEBHOOK_SECRET)
+    except ValueError:
+        print("⚠️ Invalid payload")
+        return jsonify({'error': 'Invalid payload'}), 400
+    except stripe.error.SignatureVerificationError:
+        print("⚠️ Invalid signature")
+        return jsonify({'error': 'Invalid signature'}), 400
+
+    print(f"🔹 Event received: {event['type']}")
+
+    # Handle successful payments
+    if event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']
+        print(f"💰 Payment succeeded for {payment_intent['amount']} cents")
+
+        # Save the payment to the database
+        payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
+        print(f"Payment Intent ID: {payment_intent['id']}")
+
+        if payment:
+            payment.status = "succeeded"
+            db.session.commit()
+            print("✅ Payment updated in database")
+        else:
+            print("⚠️ No matching payment record found in database")
+
+    return jsonify({'status': 'success'}), 200
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    data = request.get_json()
+    
+    email = data.get("email")
+    amount = data.get("amount")  # Amount should be in cents
+
+    if not email or not amount:
+        return jsonify({"error": "Missing email or amount"}), 400
+
+    try:
+        # Step 1: Create a PaymentIntent on Stripe
+        intent = stripe.PaymentIntent.create(
+            amount=amount,  # Amount in cents (e.g., 2000 = $20.00)
+            currency="usd",
+            receipt_email=email,
+        )
+
+        # Step 2: Store payment in database
+        new_payment = Payment(
+            payment_intent_id=intent.id,
+            email=email,
+            amount=amount,
+            status="pending"  # Initially set to pending
+        )
+
+        db.session.add(new_payment)
+        db.session.commit()
+
+        return jsonify({
+            "clientSecret": intent.client_secret,  # Needed for frontend
+            "paymentIntentId": intent.id,
+            "message": "Payment initiated successfully"
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+'''
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment_intent():
     try:
@@ -111,7 +218,7 @@ def update_payment_status():
             return jsonify({"error": "Payment not found."}), 404
     except Exception as e:
         return jsonify(error=str(e)), 400
-    
+'''
 #------------------------------------------------------------------------------------
 
 @app.route('/api/song-submissions', methods=['POST'])
