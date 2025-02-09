@@ -44,7 +44,7 @@ function SongLevels() {
                         className="level-card"
                         onClick={() => handleCardClick(level.level)}
                     >
-                        <img src={level.image} alt={level.title} className="level-image" />
+                        <img src={level.image} alt={level.title} className="level-image" loading="lazy"/>
                         <h2>{level.title}</h2>
                         <p>{level.description}</p>
                     </div>

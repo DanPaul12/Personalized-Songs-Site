@@ -98,13 +98,13 @@ const HomePage = () => {
                                 <p>Fill out a quick form with details about your song.</p>    
                         </div>
                         <div className='stepimg'>
-                            <img src={FirstSong1}></img>
+                            <img src={FirstSong1} loading="lazy" alt="Custom Song for Wedding"></img>
                             <p className="caption">Taylor wanted a first dance song for her wedding</p>
                         </div>
                     </div>
                     <div className="step2" data-aos="fade-up">
                         <div className='stepimg'>
-                            <img src={FirstSong2}></img>
+                            <img src={FirstSong2} loading="lazy" alt="Custom Song as gift"></img>
                             <p className="caption">I sang her story over a strummed guitar with a waltz pattern</p>
                         </div>
                         <div className='text2'>
@@ -118,7 +118,7 @@ const HomePage = () => {
                             <p>Get a professional-quality track delivered to you.</p>
                         </div>
                         <div className='stepimg'>
-                            <img src={FirstSong3}></img>
+                            <img src={FirstSong3} loading="lazy" alt="Custom Song for husband"></img>
                             <p className="caption">When the big day came, they danced to it in front of friends and fam!</p>
                         </div>
                     </div>
