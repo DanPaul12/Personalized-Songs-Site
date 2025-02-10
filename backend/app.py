@@ -45,6 +45,7 @@ def serve_react(path):
     
 #----------------------------------------------------------------
 
+#WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
 WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
 
 def handle_payment_success(payment_intent):
@@ -102,9 +103,10 @@ def handle_payment_canceled(payment_intent):
 '''
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
+    
+
     payload = request.get_data(as_text=True)
     sig_header = request.headers.get('Stripe-Signature')
-    print(f"Stripe Signature: {sig_header}")
 
     try:
         # Verify the webhook signature
@@ -123,9 +125,8 @@ def stripe_webhook():
         payment_intent = event['data']['object']
         print(f"💰 Payment succeeded for {payment_intent['amount']} cents")
 
-        # Save the payment to the database
+        # Find and update payment in database
         payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
-        print(f"Payment Intent ID: {payment_intent['id']}")
 
         if payment:
             payment.status = "succeeded"
@@ -147,26 +148,27 @@ def checkout():
         return jsonify({"error": "Missing email or amount"}), 400
 
     try:
-        # Step 1: Create a PaymentIntent on Stripe
+        # Create a PaymentIntent on Stripe
         intent = stripe.PaymentIntent.create(
-            amount=amount,  # Amount in cents (e.g., 2000 = $20.00)
+            amount=amount,  # Amount in cents
             currency="usd",
             receipt_email=email,
         )
 
-        # Step 2: Store payment in database
+        # Store payment in database
         new_payment = Payment(
             payment_intent_id=intent.id,
             email=email,
             amount=amount,
-            status="pending"  # Initially set to pending
+            status="pending",  # Initially set to pending
+            created_at=datetime.utcnow()
         )
 
         db.session.add(new_payment)
         db.session.commit()
 
         return jsonify({
-            "clientSecret": intent.client_secret,  # Needed for frontend
+            "clientSecret": intent.client_secret,
             "paymentIntentId": intent.id,
             "message": "Payment initiated successfully"
         }), 200
