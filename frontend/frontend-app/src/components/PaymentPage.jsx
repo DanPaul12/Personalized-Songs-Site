@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
+import './PaymentPage.css'
 import { useLocation } from "react-router-dom";
 
 // Load Stripe instance with environment variable
@@ -136,7 +137,7 @@ function PaymentForm() {
                 <CardElement />
             </label>
             <br />
-            <button type="submit" disabled={!stripe || loading}>
+            <button id='submit' type="submit" disabled={!stripe || loading}>
                 {loading ? "Processing..." : "Pay"}
             </button>
             {message && <p>{message}</p>}

@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../assets/Myfont1-Regular.otf') format('opentype'),
+         url('../assets/Myfont1-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+#submissionh1{
+  font-family: 'CustomFont';
+  color: rgb(75, 70, 70);
+    letter-spacing: .05em;
+    line-height: 1.6em;
+    text-shadow: 2px 2px 5px rgba(94, 5, 102, .5);
+    font-size: 3.2em;
+}
+
+#submit {
+    display: block;
+    margin: auto;
+    background-color: rgba(118, 48, 129, 0.8) ;
+    color: #fff;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+#submit:hover {
+    background-color: rgba(119, 22, 119, 0.8);
+  }

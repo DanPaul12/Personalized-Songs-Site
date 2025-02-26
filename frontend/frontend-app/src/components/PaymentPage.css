@@ -1,0 +1,14 @@
+#submit {
+    display: block;
+    margin: auto;
+    background-color: rgba(118, 48, 129, 0.8) ;
+    color: #fff;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+#submit:hover {
+    background-color: rgba(119, 22, 119, 0.8);
+  }

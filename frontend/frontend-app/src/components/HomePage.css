@@ -281,8 +281,10 @@ h2{
     margin-bottom: 0.5rem;
     color: #333;
     font-family: 'Poppins';
+    font-weight: 700;
     text-decoration: underline;
-    text-shadow: #333;
+    
+    text-shadow: 5px 2px 5px rgb(193, 87, 220, .5);
 }
 
 .steps p{

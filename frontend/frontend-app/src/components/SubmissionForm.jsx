@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './SubmissionForm.css'
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -58,7 +59,7 @@ function SongSubmissionForm() {
     return (
         <div className='bodysection'>
             <form onSubmit={handleSubmit}>
-                <h1>Order Form</h1>
+                <h1 id='submissionh1'>Order Form</h1>
                 <p>Selected Level: {selectedLevel} (${selectedPrice})</p>
                 <p>Please allow 2-3 weeks for delivery- more time often means more special!</p>
                 <label>
@@ -92,7 +93,7 @@ function SongSubmissionForm() {
                 </label>
                 <br />
                 <p>Feel free to email danandrum@gmail.com with  any other details or media!</p>
-                <button type="submit">Submit Song</button>
+                <button id='submit' type="submit">Submit Song</button>
             </form>
         </div>
     );

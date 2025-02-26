@@ -13,20 +13,20 @@ function SongLevels() {
         {
             level: 'basic',
             title: 'Basic',
-            image: basic, // Replace with your image paths
-            description: 'A simple yet heartfelt custom song.',
+            image: basic, 
+            description: 'A custom song with acoustic guitar and vocals, 1 minute and 30 seconds long.',
         },
         {
             level: 'premium',
             title: 'Premium',
-            image: premium, // Replace with your image paths
-            description: 'Enhanced production and creative lyrics.',
+            image: premium, 
+            description: 'A custom song with full instrumentation, 3 minutes or longer',
         },
         {
             level: 'deluxe',
             title: 'Deluxe',
-            image: deluxe, // Replace with your image paths
-            description: 'Top-notch production and a personal touch.',
+            image: deluxe, 
+            description: 'Fully produced and mastered, ready for professional release',
         },
     ];
 

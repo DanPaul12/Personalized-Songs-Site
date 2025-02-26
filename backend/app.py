@@ -5,7 +5,6 @@ from datetime import datetime
 import stripe
 import traceback
 import json
-from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
 from config import init_app, init_stripe

@@ -85,7 +85,7 @@ const HomePage = () => {
                         <p>One of our newest commissions, it has quickly become a fan favorite and inspired a wave of new orders</p>
                     </div>
                 </div>
-                <button className="cta-button">Order Your Song</button>
+                <button className="cta-button" onClick={handleGetStarted}>Order Your Song</button>
             </section>
 
             {/* How It Works Section */}
