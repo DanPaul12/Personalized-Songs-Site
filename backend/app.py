@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_mail import Mail, Message
 import stripe
 import traceback
 import json
@@ -16,6 +17,15 @@ init_app(app)
 init_stripe()
 #CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
 CORS(app, resources={r"/*": {"origins": "*"}})
+mail = Mail(app)
+
+print("MAIL_SERVER:", app.config["MAIL_SERVER"])
+print("MAIL_PORT:", app.config["MAIL_PORT"])
+print("MAIL_USE_TLS:", app.config["MAIL_USE_TLS"])
+print("MAIL_USERNAME:", app.config["MAIL_USERNAME"])
+print("MAIL_PASSWORD:", "******" if app.config["MAIL_PASSWORD"] else "Not Set")
+print("MAIL_DEFAULT_SENDER:", app.config["MAIL_DEFAULT_SENDER"])
+print(os.getenv("MAIL_USERNAME"))
 
 db.init_app(app)
 
@@ -42,6 +52,39 @@ def serve_react(path):
     else:
         return send_from_directory('frontend/frontend-app/build', 'index.html')
     
+#----------------------------------------------------------------
+
+@app.route("/send_confirmation", methods=["POST"])
+def send_confirmation():
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        song_details = data.get("song_details")
+
+        # Print debug logs
+        print("Received request:", data)
+        print("Extracted email:", email)
+        print("Extracted song details:", song_details)
+
+        if not email or not song_details:
+            return jsonify({"error": "Missing email or song details"}), 400
+
+        msg = Message(
+            subject="Payment Confirmation",
+            sender=app.config["MAIL_DEFAULT_SENDER"],
+            recipients=[email],
+            body=f"Thank you for your payment! Your song details: {song_details}"
+        )
+
+        print("Attempting to send email...")
+        mail.send(msg)
+        print("✅ Email sent successfully!")
+
+        return jsonify({"message": "Confirmation email sent successfully"}), 200
+    except Exception as e:
+        print(f"❌ Error while sending email: {e}")  # Log the error to the console
+        return jsonify({"error": str(e)}), 500
+
 #----------------------------------------------------------------
 
 #WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
@@ -123,6 +166,9 @@ def stripe_webhook():
     if event['type'] == 'payment_intent.succeeded':
         payment_intent = event['data']['object']
         print(f"💰 Payment succeeded for {payment_intent['amount']} cents")
+        email = payment_intent["receipt_email"]
+        song_details = "Your personalized song details here"
+        send_email(email, song_details)
 
         # Find and update payment in database
         payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
@@ -135,6 +181,18 @@ def stripe_webhook():
             print("⚠️ No matching payment record found in database")
 
     return jsonify({'status': 'success'}), 200
+
+def send_email(recipient_email, song_details):
+    try:
+        msg = Message(
+            "Your Personalized Song Order Confirmation",
+            recipients=[recipient_email]
+        )
+        msg.body = f"Thank you for your order! 🎶\n\nSong Details:\n{song_details}"
+        mail.send(msg)
+        print("✅ Confirmation email sent!")
+    except Exception as e:
+        print(f"❌ Error sending email: {e}")
 
 @app.route('/checkout', methods=['POST'])
 def checkout():

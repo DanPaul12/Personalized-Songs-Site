@@ -11,6 +11,12 @@ class Config:
     stripe_webhook_endpoint = os.getenv("WEBHOOK_SECRET")
     password = os.getenv("DB_PASSWORD")
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "True").lower() == "true" 
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
 
 def init_app(app):
     app.config.from_object(Config)
