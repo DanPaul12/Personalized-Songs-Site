@@ -10,7 +10,7 @@
     position: fixed; /* Ensures the navbar stays at the top */
     top: 0;
     left: 0;
-    width: 100%; /* Spans the full width of the page */
+    width: 100vw; /* Spans the full width of the page */
     z-index: 1000; /* Keeps the navbar above other content */
     background-color: #fff; /* Ensures a visible background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for distinction */
@@ -42,7 +42,9 @@ body {
     list-style: none;
     display: flex;
     gap: 20px;
-    margin: 0;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 0;
 }
 
@@ -50,12 +52,16 @@ body {
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-weight: 500;
+    padding-right: 20px;
+    margin-right: 10px;
+    padding-left: 20px;
+    margin-left: 20px;
     transition: color 0.3s;
     font-size: 1.5em;
 }
 
 .navbar-links li a:hover {
-    color: #f8f8c5; /* Hover color */
+    color: #742593; /* Hover color */
 }
 
 .nav-links button {
