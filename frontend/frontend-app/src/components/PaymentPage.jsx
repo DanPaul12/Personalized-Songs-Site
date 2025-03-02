@@ -38,8 +38,8 @@ function PaymentForm() {
 
             try {
                 const response = await axios.get(
-                    /*`https://api.dananddrumpersonalizedsongs.com/api/song-submissions/${orderIdFromQuery}`*/
-                    `http://127.0.0.1:5000/api/song-submissions/${orderIdFromQuery}`
+                    `https://api.dananddrumpersonalizedsongs.com/api/song-submissions/${orderIdFromQuery}`
+                    /*`http://127.0.0.1:5000/api/song-submissions/${orderIdFromQuery}`*/
                 );
                 setSongDetails(response.data.song_details); // Update state with song details
             } catch (error) {

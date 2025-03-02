@@ -15,8 +15,8 @@ from models import db, Order, Payment, Blog
 app = Flask(__name__)
 init_app(app)
 init_stripe()
-#CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
+#CORS(app, resources={r"/*": {"origins": "*"}})
 mail = Mail(app)
 
 print("MAIL_SERVER:", app.config["MAIL_SERVER"])
