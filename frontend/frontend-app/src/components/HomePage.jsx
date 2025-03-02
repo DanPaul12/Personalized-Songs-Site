@@ -34,8 +34,9 @@ const HomePage = () => {
             </section>
 
             {/* About Section */}
+            <h2 id='abouth2'>About Dan & Drum</h2>
             <section className="about">
-                <h2>About Dan & Drum</h2>
+                
                 <p>
                 Dan & Drum is a nationally touring act that has accrued <b>10s of millions of streams</b> across platforms, with <b>Florence Pugh and Rob Thomas</b> as noted fans. Order a personalized song from Dan, and he will craft a customized song specific to your experience, while making it universally relatable- just like a "real" song. Many of these unique, catchy songs are released and go on to earn millions of streams.
                 </p>
