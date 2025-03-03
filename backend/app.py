@@ -463,4 +463,4 @@ def delete_blog(blog_id):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)  # or logging.INFO for less verbosity
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
