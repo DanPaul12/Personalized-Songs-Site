@@ -161,6 +161,10 @@ def handle_payment_canceled(payment_intent):
 '''
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
+    import sys
+    sys.stderr.write("Webhook triggered!\n")  # Should appear in Render logs
+    app.logger.debug("Webhook triggered!")
+    print("Webhook triggered!")  # Should work after our earlier fix
     
 
     payload = request.get_data(as_text=True)
