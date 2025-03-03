@@ -103,8 +103,8 @@ def send_confirmation():
 
 #----------------------------------------------------------------
 
+WEBHOOK_SECRET = "whsec_0buHlqBj5FlrWbUoawfXEq6aMBY3LPja"
 #WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
-WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
 
 def handle_payment_success(payment_intent):
     """Handles successful payments from Stripe webhooks."""
