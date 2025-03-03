@@ -11,6 +11,7 @@ import os
 from config import init_app, init_stripe
 from models import db, Order, Payment, Blog
 import logging
+import sys
 
 
 app = Flask(__name__)
@@ -20,12 +21,13 @@ CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com
 #CORS(app, resources={r"/*": {"origins": "*"}})
 mail = Mail(app)
 
-app.logger.setLevel(logging.DEBUG)
+sys.stdout = sys.__stdout__
+sys.stderr = sys.__stderr__
 
-# Add a file handler if needed
-file_handler = logging.FileHandler("app.log")
-file_handler.setLevel(logging.DEBUG)
-app.logger.addHandler(file_handler)
+app.logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+app.logger.addHandler(handler)
 
 print("MAIL_SERVER:", app.config["MAIL_SERVER"])
 print("MAIL_PORT:", app.config["MAIL_PORT"])
@@ -37,6 +39,12 @@ print(os.getenv("MAIL_USERNAME"))
 
 db.init_app(app)
 
+
+@app.route("/test-log", methods=["GET"])
+def test_log():
+    print("Testing print log", flush=True)
+    app.logger.debug("Testing app.logger log")
+    return "Logged!"
 
 @app.route('/init-db', methods=['GET'])
 def init_db():
