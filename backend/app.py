@@ -162,10 +162,10 @@ def stripe_webhook():
         # Verify the webhook signature
         event = stripe.Webhook.construct_event(payload, sig_header, WEBHOOK_SECRET)
     except ValueError:
-        print("⚠️ Invalid payload")
+        app.logger.debug("⚠️ Invalid payload")
         return jsonify({'error': 'Invalid payload'}), 400
     except stripe.error.SignatureVerificationError:
-        print("⚠️ Invalid signature")
+        app.logger.debug("⚠️ Invalid signature")
         return jsonify({'error': 'Invalid signature'}), 400
 
     print(f"🔹 Event received: {event['type']}")
@@ -173,7 +173,7 @@ def stripe_webhook():
     # Handle successful payments
     if event['type'] == 'payment_intent.succeeded':
         payment_intent = event['data']['object']
-        print(f"💰 Payment succeeded for {payment_intent['amount']} cents")
+        app.logger.debug(f"💰 Payment succeeded for {payment_intent['amount']} cents")
         email = payment_intent["receipt_email"]
         song_details = "Your personalized song details here"
         send_email(email, song_details)
@@ -184,9 +184,9 @@ def stripe_webhook():
         if payment:
             payment.status = "succeeded"
             db.session.commit()
-            print("✅ Payment updated in database")
+            app.logger.debug("✅ Payment updated in database")
         else:
-            print("⚠️ No matching payment record found in database")
+            app.logger.debug("⚠️ No matching payment record found in database")
 
     return jsonify({'status': 'success'}), 200
 
@@ -198,9 +198,9 @@ def send_email(recipient_email, song_details):
         )
         msg.body = f"Thank you for your order! 🎶\n\nSong Details:\n{song_details}"
         mail.send(msg)
-        print("✅ Confirmation email sent!")
+        app.logger.debug("✅ Confirmation email sent!")
     except Exception as e:
-        print(f"❌ Error sending email: {e}")
+        app.logger.debug(f"❌ Error sending email: {e}")
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
