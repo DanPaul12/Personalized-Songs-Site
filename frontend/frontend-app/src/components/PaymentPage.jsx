@@ -66,7 +66,7 @@ function PaymentForm() {
 
         try {
             const response = await axios.post(
-                "http://127.0.0.1:5000/checkout", {
+                "https://api.dananddrumpersonalizedsongs.com/checkout", {
                 amount: amount * 100, // Convert to cents
                 email: email,
                 song_details: songDetails, // Pass song details
