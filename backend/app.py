@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 import os
 from config import init_app, init_stripe
 from models import db, Order, Payment, Blog
+import logging
 
 
 app = Flask(__name__)
@@ -18,6 +19,13 @@ init_stripe()
 CORS(app, resources={r"/*": {"origins": "https://dananddrumpersonalizedsongs.com"}})
 #CORS(app, resources={r"/*": {"origins": "*"}})
 mail = Mail(app)
+
+app.logger.setLevel(logging.DEBUG)
+
+# Add a file handler if needed
+file_handler = logging.FileHandler("app.log")
+file_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(file_handler)
 
 print("MAIL_SERVER:", app.config["MAIL_SERVER"])
 print("MAIL_PORT:", app.config["MAIL_PORT"])
