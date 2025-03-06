@@ -85,10 +85,6 @@ function PaymentForm() {
                 setMessage(error.message);
             } else {
                 setMessage("Payment successful! Thank you.");
-                /*await axios.post("http://127.0.0.1:5000/webhook", {
-                    paymentIntentId: clientSecret.split("_secret")[0],
-                    status: "succeeded",
-                });*/
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");

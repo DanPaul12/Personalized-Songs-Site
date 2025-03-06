@@ -204,7 +204,7 @@ def stripe_webhook():
             app.logger.debug("⚠️ No matching payment record found in database")
 
     return jsonify({'status': 'success'}), 200
-
+'''
 def send_email(recipient_email, song_details):
     try:
         msg = Message(
@@ -216,6 +216,7 @@ def send_email(recipient_email, song_details):
         app.logger.debug("✅ Confirmation email sent!")
     except Exception as e:
         app.logger.debug(f"❌ Error sending email: {e}")
+'''
 
 def send_email2(recipient_email):
     return requests.post(
