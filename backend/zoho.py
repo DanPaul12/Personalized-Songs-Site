@@ -1,32 +1,23 @@
 from flask import Flask
-from flask_mail import Mail, Message
 import os
+import requests
 
 app = Flask(__name__)
 
-# Load email config from environment variables
-app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER")
-app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 587))  # Convert to int
-app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "True").lower() == "true"
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
 
-mail = Mail(app)
+def send_simple_message():
+  	return requests.post(
+  		"https://api.mailgun.net/v3/dananddrumpersonalizedsongs.com/messages",
+  		auth=("api", os.getenv('MAILGUN_API_KEY')),
+  		data={"from": "Dan & Drum <postmaster@dananddrumpersonalizedsongs.com>",
+			"to": "Daniel Paul Schechter <dan.paul.schechter@gmail.com>",
+  			"subject": "Hello Daniel Paul Schechter",
+  			"text": "Congratulations Daniel Paul Schechter, you just sent an email with Mailgun! You are truly awesome!"})
+        
 
-@app.route("/test-email")
-def send_test_email():
-    try:
-        msg = Message(
-            subject="Test Email",
-            sender=app.config["MAIL_DEFAULT_SENDER"],
-            recipients=["dan.paul.schechter@gmail.com"],
-            body="This is a test email from your Flask app."
-        )
-        mail.send(msg)
-        return "✅ Email sent successfully!"
-    except Exception as e:
-        return f"❌ Error: {e}"
+response = send_simple_message()
+print("Status Code:", response.status_code)
+print("Response Text:", response.text)
 
 if __name__ == "__main__":
     app.run(debug=True)

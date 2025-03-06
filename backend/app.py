@@ -12,6 +12,7 @@ from config import init_app, init_stripe
 from models import db, Order, Payment, Blog
 import logging
 import sys
+import requests
 
 
 app = Flask(__name__)
@@ -189,7 +190,7 @@ def stripe_webhook():
         app.logger.debug(f"💰 Payment succeeded for {payment_intent['amount']} cents")
         email = payment_intent["receipt_email"]
         song_details = "Your personalized song details here"
-        send_email(email, song_details)
+        send_email2(email)
 
         # Find and update payment in database
         payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
@@ -214,6 +215,16 @@ def send_email(recipient_email, song_details):
         app.logger.debug("✅ Confirmation email sent!")
     except Exception as e:
         app.logger.debug(f"❌ Error sending email: {e}")
+
+def send_email2(recipient_email):
+    return requests.post(
+  		"https://api.mailgun.net/v3/dananddrumpersonalizedsongs.com/messages",
+  		auth=("api", os.getenv('MAILGUN_API_KEY')),
+  		data={"from": "Dan & Drum <postmaster@dananddrumpersonalizedsongs.com>",
+			"to": f'Daniel Paul Schechter <{recipient_email}>',
+  			"subject": "Hello Daniel Paul Schechter",
+  			"text": "Congratulations Daniel Paul Schechter, you just sent an email with Mailgun! You are truly awesome!"})
+
 
 @app.route('/checkout', methods=['POST'])
 def checkout():

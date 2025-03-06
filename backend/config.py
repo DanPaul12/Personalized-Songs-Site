@@ -17,6 +17,7 @@ class Config:
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
 def init_app(app):
     app.config.from_object(Config)
