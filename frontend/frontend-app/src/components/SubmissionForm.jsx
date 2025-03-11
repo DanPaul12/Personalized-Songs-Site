@@ -11,7 +11,7 @@ function SongSubmissionForm() {
     const selectedLevel = queryParams.get('level');
 
     const priceMapping = {
-        basic: 250,
+        basic: 1,
         premium: 500,
         deluxe: 650,
     };
