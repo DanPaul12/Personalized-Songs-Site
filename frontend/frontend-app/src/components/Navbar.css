@@ -14,7 +14,7 @@
     z-index: 1000; /* Keeps the navbar above other content */
     background-color: #fff; /* Ensures a visible background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for distinction */
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 1px 20px; /* Adjust padding as needed */
     font-family: 'CustomFont';
 }
 

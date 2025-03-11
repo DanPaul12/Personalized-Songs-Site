@@ -18,6 +18,7 @@ class Config:
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+    WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET")
 
 def init_app(app):
     app.config.from_object(Config)

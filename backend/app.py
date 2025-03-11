@@ -104,10 +104,6 @@ def send_confirmation():
 
 #----------------------------------------------------------------
 
-#WEBHOOK_SECRET = "whsec_0buHlqBj5FlrWbUoawfXEq6aMBY3LPja"
-#WEBHOOK_SECRET = "whsec_Bm080uNpWetHWTEsMdmBkMyTmA4iXBAY"
-WEBHOOK_SECRET = "whsec_rFxdai0Rf9Gu3lQ3K8mzLNuEfbQiK4Lr"
-#WEBHOOK_SECRET = "whsec_48645bd88705d0e4e25d927a5ea01644ae4ed29bd0e88d143de295ad6f426733"
 
 def handle_payment_success(payment_intent):
     """Handles successful payments from Stripe webhooks."""
@@ -175,7 +171,7 @@ def stripe_webhook():
 
     try:
         # Verify the webhook signature
-        event = stripe.Webhook.construct_event(payload, sig_header, WEBHOOK_SECRET)
+        event = stripe.Webhook.construct_event(payload, sig_header, os.getenv('WEBHOOK_SECRET'))
     except ValueError:
         app.logger.debug("⚠️ Invalid payload")
         return jsonify({'error': 'Invalid payload'}), 400
@@ -223,9 +219,9 @@ def send_email2(recipient_email):
   		"https://api.mailgun.net/v3/dananddrumpersonalizedsongs.com/messages",
   		auth=("api", os.getenv('MAILGUN_API_KEY')),
   		data={"from": "Dan & Drum <postmaster@dananddrumpersonalizedsongs.com>",
-			"to": f'Daniel Paul Schechter <{recipient_email}>',
-  			"subject": "Hello Daniel Paul Schechter",
-  			"text": "Congratulations Daniel Paul Schechter, you just sent an email with Mailgun! You are truly awesome!"})
+			"to": f'Happy Customer <{recipient_email}>',
+  			"subject": "Personalized Song Purchased",
+  			"text": "Thanks so much for your order! You can expect your personalized sonog in 2-3 weeks, with updates along the way! If you have any questions or concerns, feel free to reach out to danandrum@gmail.com for further assistance."})
 
 
 @app.route('/checkout', methods=['POST'])
