@@ -113,19 +113,11 @@ h2{
     align-self: center;
 }
 
-.about h2{
-    font-family: 'CustomFont', sans-serif;
-    color: rgb(75, 70, 70);
-    letter-spacing: .05em;
-    line-height: 1.6em;
-    text-shadow: 2px 2px 5px rgba(94, 5, 102, .5);
-    font-size: 2.6em;
-    text-wrap: balance;
-    display: flex;
-    flex-direction: row;
-    max-width: 100%;
-    justify-content: center;
-    align-self: center;
+
+@media (max-width: 370px) {
+    #abouth2 {
+        font-size: 2.4em;
+    }
 }
 
 /* About Section */
@@ -182,7 +174,7 @@ h2{
 }
 
 .portfolio h2 {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 .portfolio-grid {
@@ -242,6 +234,7 @@ h2{
 
 .how-it-works h2{
     align-self: center;
+    margin-bottom: .7em;
 }
 
 .how-it-works .step{

@@ -84,7 +84,7 @@ function PaymentForm() {
             if (error) {
                 setMessage(error.message);
             } else {
-                setMessage("Payment successful! Thank you.");
+                setMessage("Payment successful! Thank you. A confirmation email will be sent shortly.");
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");

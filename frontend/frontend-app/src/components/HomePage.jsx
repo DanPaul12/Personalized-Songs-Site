@@ -34,7 +34,7 @@ const HomePage = () => {
             </section>
 
             {/* About Section */}
-            <h2 id='abouth2'>About Dan & Drum</h2>
+            <h2 id='abouth2'>About Dan & Drum:</h2>
             <section className="about">
                 
                 <p>
@@ -50,7 +50,7 @@ const HomePage = () => {
 
             {/* Portfolio Section */}
             <section className="portfolio">
-                <h2>Listen to the Music</h2>
+                <h2>Listen to the Music:</h2>
                 <div className="portfolio-grid">
                     <div className="spotify-player">
                         <iframe 
@@ -91,7 +91,7 @@ const HomePage = () => {
 
             {/* How It Works Section */}
             <section className="how-it-works">
-                <h2>How It Works</h2>
+                <h2>How It Works:</h2>
                 <div className="steps">
                     <div className="step" data-aos="fade-up">
                         <div className='text1'>
