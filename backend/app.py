@@ -134,30 +134,7 @@ def handle_payment_canceled(payment_intent):
     if payment:
         payment.status = "canceled"
         db.session.commit()
-'''
-def handle_payment_success(payment_intent):
-    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
-    if payment:
-        payment.status = "succeeded"
-        db.session.commit()
 
-        order = Order.query.filter_by(email=payment.email).order_by(Order.created_at.desc()).first()
-        if order:
-            #send_confirmation_email(order.email, order.song_details)
-            print(f"Confirmation email sent to {order.email} for order ID {order.id}.")
-
-def handle_payment_failure(payment_intent):
-    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
-    if payment:
-        payment.status = "failed"
-        db.session.commit()
-
-def handle_payment_canceled(payment_intent):
-    payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
-    if payment:
-        payment.status = "canceled"
-        db.session.commit()
-'''
 @app.route('/webhook', methods=['POST'])
 def stripe_webhook():
     import sys
@@ -200,19 +177,6 @@ def stripe_webhook():
             app.logger.debug("⚠️ No matching payment record found in database")
 
     return jsonify({'status': 'success'}), 200
-'''
-def send_email(recipient_email, song_details):
-    try:
-        msg = Message(
-            "Your Personalized Song Order Confirmation",
-            recipients=[recipient_email]
-        )
-        msg.body = f"Thank you for your order! 🎶\n\nSong Details:\n{song_details}"
-        mail.send(msg)
-        app.logger.debug("✅ Confirmation email sent!")
-    except Exception as e:
-        app.logger.debug(f"❌ Error sending email: {e}")
-'''
 
 def send_email2(recipient_email):
     return requests.post(
@@ -262,52 +226,7 @@ def checkout():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-'''
-@app.route('/create-payment-intent', methods=['POST'])
-def create_payment_intent():
-    try:
-        data = request.json
-        amount = data.get('amount', 0)
-        email = data.get('email')
-        song_details = data.get('song_details', 'No details provided')
-        intent = stripe.PaymentIntent.create(
-            amount=amount,
-            currency='usd',
-            automatic_payment_methods={"enabled": True},
-        )
 
-        payment = Payment(
-            payment_intent_id=intent['id'],
-            email=email,
-            amount=amount,
-            status="pending"
-        )
-        db.session.add(payment)
-        db.session.commit()
-
-        return jsonify({'clientSecret': intent['client_secret']})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-    
-@app.route('/update-payment-status', methods=['POST'])
-def update_payment_status():
-    data = request.get_json()
-    payment_intent_id = data['paymentIntentId']
-    status = data['status']
-
-    try:
-        # Find the payment record
-        payment = Payment.query.filter_by(payment_intent_id=payment_intent_id).first()
-        if payment:
-            payment.status = status
-            db.session.commit()
-            
-            return jsonify({"message": "Payment status updated successfully."})
-        else:
-            return jsonify({"error": "Payment not found."}), 404
-    except Exception as e:
-        return jsonify(error=str(e)), 400
-'''
 #------------------------------------------------------------------------------------
 
 @app.route('/api/song-submissions', methods=['POST'])
