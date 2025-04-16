@@ -389,6 +389,8 @@ def delete_blog(blog_id):
         return jsonify({'message': 'Blog post deleted!'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+#---------------------------------------------------------------------------------  
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)  # or logging.INFO for less verbosity
