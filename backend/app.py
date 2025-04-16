@@ -70,7 +70,7 @@ def serve_react(path):
         return send_from_directory('frontend/frontend-app/build', 'index.html')
     
 #----------------------------------------------------------------
-
+'''
 @app.route("/send_confirmation", methods=["POST"])
 def send_confirmation():
     try:
@@ -101,7 +101,7 @@ def send_confirmation():
     except Exception as e:
         print(f"❌ Error while sending email: {e}")  # Log the error to the console
         return jsonify({"error": str(e)}), 500
-
+'''
 #----------------------------------------------------------------
 
 
@@ -165,6 +165,7 @@ def stripe_webhook():
         email = payment_intent["receipt_email"]
         song_details = "Your personalized song details here"
         send_email2(email)
+        send_email4()
 
         # Find and update payment in database
         payment = Payment.query.filter_by(payment_intent_id=payment_intent['id']).first()
@@ -187,6 +188,23 @@ def send_email2(recipient_email):
   			"subject": "Personalized Song Purchased",
   			"text": "Thanks so much for your order! You can expect your personalized sonog in 2-3 weeks, with updates along the way! If you have any questions or concerns, feel free to reach out to danandrum@gmail.com for further assistance."})
 
+def send_email3(email):
+    return requests.post(
+  		"https://api.mailgun.net/v3/dananddrumpersonalizedsongs.com/messages",
+  		auth=("api", os.getenv('MAILGUN_API_KEY')),
+  		data={"from": "Dan & Drum <postmaster@dananddrumpersonalizedsongs.com>",
+			"to": f'me <danandrum@gmail.com>',
+  			"subject": "Personalized Song Purchased",
+  			"text": f'someone ({email}) submitted a song request'})
+
+def send_email4():
+    return requests.post(
+  		"https://api.mailgun.net/v3/dananddrumpersonalizedsongs.com/messages",
+  		auth=("api", os.getenv('MAILGUN_API_KEY')),
+  		data={"from": "Dan & Drum <postmaster@dananddrumpersonalizedsongs.com>",
+			"to": f'me <danandrum@gmail.com>',
+  			"subject": "Personalized Song Purchased",
+  			"text": "and they paid for it!"})
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
@@ -256,7 +274,7 @@ def submit_song():
         )
         db.session.add(new_order)
         db.session.commit()
-
+        send_email3(email)
         return jsonify({'message': 'Song submission received!', "order_id": new_order.id}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
